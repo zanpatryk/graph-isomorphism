@@ -7,5 +7,8 @@ add_executable(aac main.c
         utils.h
         utils.c
         graph.h
-        graph.c)
+        graph.c
+        algorithms.h
+        algorithms/minimal_extension.h
+        algorithms/minimal_extension.c)
 
