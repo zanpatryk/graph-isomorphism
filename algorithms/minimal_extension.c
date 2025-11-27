@@ -63,7 +63,6 @@ static int backtrack_extend(const int v_index, int *mapping, bool *used_u) {
             mapping[v_index] = u;
             used_u[u] = true;
 
-            // REMOVED THE PRUNING BLOCK HERE TO PREVENT SEGFAULT
             backtrack_extend(v_index + 1, mapping, used_u);
 
             used_u[u] = false; // Backtrack
