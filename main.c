@@ -10,6 +10,7 @@ int main(const int argc, char *argv[]) {
         fprintf(stderr, "Usage: %s <function_name> <path_to_graph_data>\n", argv[0]);
         fprintf(stderr, "Available functions:\n");
         fprintf(stderr, "  minimal_extension\n");
+        fprintf(stderr, "  approximate_extension\n");
         return 1;
     }
 
@@ -28,6 +29,8 @@ int main(const int argc, char *argv[]) {
     // 3. Run Algorithm
     if (strcmp(function_name, "minimal_extension") == 0) {
         solve_minimal_extension(n_g, adj_g, n_h, adj_h);
+    } else if (strcmp(function_name, "approximate_extension") == 0) {
+        solve_approximate_extension(n_g, adj_g, n_h, adj_h);
     } else {
         fprintf(stderr, "Error: Unknown function '%s'\n", function_name);
         free(adj_g);

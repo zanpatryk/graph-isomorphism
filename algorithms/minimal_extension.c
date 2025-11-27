@@ -14,9 +14,7 @@ static int H_adj[MAX_VERTICES][MAX_VERTICES];
 static int n_g_global;
 static int n_h_global;
 
-/**
- * Calculates cost for the current mapping.
- */
+// Calculates cost for the current mapping.
 static int calculate_extension_cost(const int *current_mapping) {
     int current_edges_to_add = 0;
     for (int i = 0; i < n_g_global; i++) {
@@ -36,9 +34,7 @@ static int calculate_extension_cost(const int *current_mapping) {
     return current_edges_to_add;
 }
 
-/**
- * Recursive Backtracking with STRICT 1-to-1 Constraint
- */
+// Recursive Backtracking with STRICT 1-to-1 Constraint
 static int backtrack_extend(const int v_index, int *mapping, bool *used_u) {
     if (mapping == NULL || used_u == NULL)
         return 1;
@@ -63,7 +59,6 @@ static int backtrack_extend(const int v_index, int *mapping, bool *used_u) {
             mapping[v_index] = u;
             used_u[u] = true;
 
-            // REMOVED THE PRUNING BLOCK HERE TO PREVENT SEGFAULT
             backtrack_extend(v_index + 1, mapping, used_u);
 
             used_u[u] = false; // Backtrack
