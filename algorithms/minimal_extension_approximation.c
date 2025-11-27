@@ -1,5 +1,4 @@
 #include "minimal_extension_approximation.h"
-#include "minimal_extension.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
