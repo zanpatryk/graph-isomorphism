@@ -12,5 +12,9 @@ add_executable(aac main.c
         algorithms/minimal_extension.h
         algorithms/minimal_extension.c
         algorithms/minimal_extension_approximation.c
-        algorithms/minimal_extension_approximation.h)
+        algorithms/minimal_extension_approximation.h
+        algorithms/product_graph.h
+        algorithms/product_graph.c
+        algorithms/isomorphism.h
+        algorithms/isomorphism.c)
 

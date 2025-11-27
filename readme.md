@@ -1,15 +1,30 @@
-# Graph Extension Solver
+# Graph Comparison Framework
 
-## 1. Compile
-Use `gcc` to compile the source code.
+A framework for comparing directed multigraphs, finding subgraph isomorphisms, and computing minimal extensions.
+
+## Building
+
 ```bash
-gcc main.c -o graph_solver
+mkdir build && cd build
+cmake ..
+make
 ```
 
-## 2. Prepare Input Data
-Create a text file (e.g., `data.txt`) defining graph **g** and graph **h**.
-* **Format:** Header (`g` or `h`), number of vertices, followed by edge list (`source-dest`).
-* *Note: Vertices are 1-indexed.*
+Or with gcc directly:
+```bash
+gcc -o aac main.c utils.c graph.c \
+    algorithms/product_graph.c \
+    algorithms/isomorphism.c \
+    algorithms/minimal_extension.c \
+    algorithms/minimal_extension_approximation.c
+```
+
+## Input Format
+
+Create a text file defining graphs **G** and **H**:
+- Header line: `g` or `h`
+- Second line: number of vertices
+- Remaining lines: edges as `source-dest` (1-indexed)
 
 ```text
 g
@@ -26,20 +41,101 @@ h
 4-1
 ```
 
-## 3. Execute
-Run the program by specifying the function name and the input file path.
+## Commands
+
+### Finding Subgraph Isomorphisms
+
+Find up to `n` distinct subgraph isomorphisms from G to H:
 
 ```bash
-./graph_solver minimal_extension data.txt
+# Exact algorithm (Bron-Kerbosch on product graph)
+./aac iso_exact data/graph.txt 3
+
+# Heuristic algorithm (greedy clique)
+./aac iso_approx data/graph.txt 3
 ```
 
-### Output Example
-```text
-Minimal number of added edges: 1
-1. Vertex Mapping (G -> H):
-   G_1 -> H_1
-   G_2 -> H_2
-   G_3 -> H_3
-2. Edges to Add to H:
-   Add 1 edge(s): H_3 -> H_1  (for G_3 -> G_1)
+### Finding Minimal Extensions
+
+Find minimal edges to add to H so that G can be embedded `n` times:
+
+```bash
+# Exact algorithm (backtracking, iterative for n>1)
+./aac ext_exact data/graph.txt 2
+
+# Heuristic algorithm (greedy matching, iterative)
+./aac ext_approx data/graph.txt 2
 ```
+
+### Legacy Commands (n=1)
+
+```bash
+./aac minimal_extension data/graph.txt
+./aac approximate_extension data/graph.txt
+```
+
+## Examples
+
+```bash
+# Find if triangle is subgraph of square (with diagonal needed)
+./aac iso_exact data/triangle-square.txt 1
+
+# Find 3 ways to embed triangle into itself
+./aac iso_exact data/identical_triangles.txt 3
+
+# Find minimal extension for 2 embeddings
+./aac ext_approx data/compy.txt 2
+```
+
+## Output
+
+### Isomorphism Output
+```
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+...
+```
+
+### Extension Output
+```
+--- Minimal Extension Result ---
+Total edges added: 2
+Mappings found: 2
+
+Mapping 1 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_2
+
+Mapping 2 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+
+Extended H' adjacency matrix:
+       1   2   3   4
+   1   0   1   0   0
+   2   0   0   1   1
+   ...
+```
+
+## Algorithm Complexity
+
+| Algorithm | Complexity | Notes |
+|-----------|------------|-------|
+| `iso_exact` | O(3^(nm/3)) | Exponential, exact |
+| `iso_approx` | O(n²m² + k·n³m) | Polynomial, may miss solutions |
+| `ext_exact` | O(k · m^n · n²) | Exponential per mapping |
+| `ext_approx` | O(k · n²m) | Polynomial, may not be minimal |
+
+Where n = |V(G)|, m = |V(H)|, k = number of isomorphisms requested.
+
+## Limitations
+
+- Maximum 20 vertices per graph (exact algorithms)
+- Maximum 100 mappings
+- Heuristic algorithms may not find all solutions or optimal extension
