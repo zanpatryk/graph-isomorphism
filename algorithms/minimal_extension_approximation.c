@@ -6,17 +6,26 @@
 // Struct to help sort vertices by degree
 typedef struct {
     int id;
-    int degree;
+    int weighted_degree; // Sum of all edge weights (multiplicity)
+    int distinct_neighbors; // Count of unique vertices connected to
 } VertexInfo;
 
-// Comparator for qsort (Descending order by degree)
+// Comparator for qsort (Descending order)
 static int compare_vertices(const void *a, const void *b) {
-    const VertexInfo *v1 = (const VertexInfo *) a;
-    const VertexInfo *v2 = (const VertexInfo *) b;
-    return v2->degree - v1->degree; // Descending
+    const VertexInfo *v1 = (const VertexInfo *)a;
+    const VertexInfo *v2 = (const VertexInfo *)b;
+
+    // 1. Primary Criteria: Weighted Degree (Total "traffic")
+    if (v2->weighted_degree != v1->weighted_degree) {
+        return v2->weighted_degree - v1->weighted_degree;
+    }
+
+    // 2. Secondary Criteria: Distinct Neighbors (Topological complexity)
+    // If weights are equal, the one connecting to MORE unique people comes first.
+    return v2->distinct_neighbors - v1->distinct_neighbors;
 }
 
-// Calculate total degree (in-degree + out-degree) for all vertices in G
+// Calculate degrees for all vertices in G
 static void calculate_degrees(int n, const int *flat_adj, VertexInfo *infos) {
     if (infos == NULL) {
         fprintf(stderr, "Error: infos pointer was null in minimal_extension_approximation/calculate_degrees. Exiting...\n");
@@ -24,15 +33,22 @@ static void calculate_degrees(int n, const int *flat_adj, VertexInfo *infos) {
     }
     for (int i = 0; i < n; i++) {
         infos[i].id = i;
-        infos[i].degree = 0;
+        infos[i].weighted_degree = 0;
+        infos[i].distinct_neighbors = 0;
     }
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             const int weight = flat_adj[i * n + j];
             if (weight > 0) {
-                infos[i].degree += weight; // Out-degree
-                infos[j].degree += weight; // In-degree
+                // Update Weighted Degree (Total Multiplicity)
+                infos[i].weighted_degree += weight; // Out-degree
+                infos[j].weighted_degree += weight; // In-degree
+
+                // Update Distinct Neighbor Count
+                // (Constraint: How many different nodes do I touch?)
+                infos[i].distinct_neighbors++;
+                infos[j].distinct_neighbors++;
             }
         }
     }
@@ -43,7 +59,7 @@ static int min(int a, int b) {
 }
 
 void solve_approximate_extension(const int n_g, const int *flat_adj_g, const int n_h, const int *flat_adj_h) {
-    printf("Running Greedy Approximation Algorithm...\n");
+    printf("Running Greedy Approximation Algorithm (Weighted + Distinct Heuristic)...\n");
 
     // 1. Validation
     if (n_g > n_h) {
@@ -57,7 +73,7 @@ void solve_approximate_extension(const int n_g, const int *flat_adj_g, const int
 
     bool *used_u = (bool *) calloc(n_h, sizeof(bool));
 
-    // 3. Sort G vertices by Degree (Heuristic: match "busiest" nodes first)
+    // 3. Sort G vertices by Degree
     VertexInfo *sorted_g = (VertexInfo *) malloc(n_g * sizeof(VertexInfo));
     calculate_degrees(n_g, flat_adj_g, sorted_g);
     qsort(sorted_g, n_g, sizeof(VertexInfo), compare_vertices);
