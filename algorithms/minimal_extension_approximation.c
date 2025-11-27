@@ -26,7 +26,7 @@ static int compare_vertices(const void *a, const void *b) {
 }
 
 // Calculate degrees for all vertices in G
-static void calculate_degrees(int n, const int *flat_adj, VertexInfo *infos) {
+static void calculate_degrees(const int n, const int *flat_adj, VertexInfo *infos) {
     if (infos == NULL) {
         fprintf(stderr, "Error: infos pointer was null in minimal_extension_approximation/calculate_degrees. Exiting...\n");
         exit(1);
