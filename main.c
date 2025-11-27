@@ -12,10 +12,6 @@ static void print_usage(const char *prog_name) {
     fprintf(stderr, "  ext_exact <file> <n>       Find minimal extension for n isomorphisms (exact)\n");
     fprintf(stderr, "  ext_approx <file> <n>      Find minimal extension for n isomorphisms (heuristic)\n");
     fprintf(stderr, "\n");
-    fprintf(stderr, "Legacy commands (n=1):\n");
-    fprintf(stderr, "  minimal_extension <file>       Same as ext_exact <file> 1\n");
-    fprintf(stderr, "  approximate_extension <file>   Same as ext_approx <file> 1\n");
-    fprintf(stderr, "\n");
     fprintf(stderr, "Example:\n");
     fprintf(stderr, "  %s iso_exact data/triangle-square.txt 3\n", prog_name);
     fprintf(stderr, "  %s ext_approx data/compy.txt 2\n", prog_name);
@@ -81,14 +77,6 @@ int main(const int argc, char *argv[]) {
         ExtensionResult *result = find_minimal_extension_greedy(n_g, adj_g, n_h, adj_h, n);
         print_extension_result(result, adj_g);
         free_extension_result(result);
-
-    } else if (strcmp(command, "minimal_extension") == 0) {
-        // Legacy: exact extension with n=1
-        solve_minimal_extension(n_g, adj_g, n_h, adj_h);
-
-    } else if (strcmp(command, "approximate_extension") == 0) {
-        // Legacy: heuristic extension with n=1
-        solve_approximate_extension(n_g, adj_g, n_h, adj_h);
 
     } else {
         fprintf(stderr, "Error: Unknown command '%s'\n\n", command);

@@ -257,15 +257,3 @@ void print_extension_result(const ExtensionResult *result, const int *adj_g) {
         printf("\n");
     }
 }
-
-// ============================================================================
-// Legacy Interface (backward compatibility)
-// ============================================================================
-
-void solve_minimal_extension(int n_g, const int *flat_adj_g, int n_h, const int *flat_adj_h) {
-    printf("Running Minimal Extension Algorithm (n=1)...\n");
-
-    ExtensionResult *result = find_minimal_extension_exact(n_g, flat_adj_g, n_h, flat_adj_h, 1);
-    print_extension_result(result, flat_adj_g);
-    free_extension_result(result);
-}

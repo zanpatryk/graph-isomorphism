@@ -286,15 +286,3 @@ ExtensionResult *find_minimal_extension_greedy(int n_g, const int *adj_g,
 
     return result;
 }
-
-// ============================================================================
-// Legacy Interface
-// ============================================================================
-
-void solve_approximate_extension(int n_g, const int *flat_adj_g, int n_h, const int *flat_adj_h) {
-    printf("Running Greedy Approximation Algorithm (n=1)...\n");
-
-    ExtensionResult *result = find_minimal_extension_greedy(n_g, flat_adj_g, n_h, flat_adj_h, 1);
-    print_extension_result(result, flat_adj_g);
-    free_extension_result(result);
-}
