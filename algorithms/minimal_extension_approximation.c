@@ -75,28 +75,27 @@ static bool mapping_exists(int **existing, int num_existing, const int *mapping,
 // Greedy Single Mapping Finder
 // ============================================================================
 
-// Find best greedy mapping for current H', excluding existing mappings
-static int *find_greedy_mapping(int n_g, const int *adj_g,
-                                 int n_h, const int *adj_h_current,
-                                 int **existing_mappings, int num_existing,
-                                 int *out_deficit) {
+// Run greedy from a fixed first assignment (first_v -> first_u)
+static int *greedy_from_start(int n_g, const int *adj_g,
+                               int n_h, const int *adj_h_current,
+                               const VertexInfo *sorted_g,
+                               const VertexInfo *h_info,
+                               int first_v, int first_u,
+                               int *out_deficit) {
     int *mapping = (int *)malloc(n_g * sizeof(int));
     for (int i = 0; i < n_g; i++) mapping[i] = -1;
 
     bool *used_h = (bool *)calloc(n_h, sizeof(bool));
 
-    // Sort G vertices by degree (descending)
-    VertexInfo *sorted_g = (VertexInfo *)malloc(n_g * sizeof(VertexInfo));
-    calc_degrees(n_g, adj_g, sorted_g);
-    qsort(sorted_g, n_g, sizeof(VertexInfo), compare_vertices);
+    // Fix the first assignment
+    mapping[first_v] = first_u;
+    used_h[first_u] = true;
 
-    // Pre-calculate H vertex degrees for tie-breaking
-    VertexInfo *h_info = (VertexInfo *)malloc(n_h * sizeof(VertexInfo));
-    calc_degrees(n_h, adj_h_current, h_info);
-
-    // Greedy matching
+    // Greedy matching for remaining vertices
     for (int i = 0; i < n_g; i++) {
         int v = sorted_g[i].id;
+
+        if (mapping[v] != -1) continue;  // Already assigned (first vertex)
 
         int best_u = -1;
         int best_score = -1;
@@ -105,31 +104,26 @@ static int *find_greedy_mapping(int n_g, const int *adj_g,
         for (int u = 0; u < n_h; u++) {
             if (used_h[u]) continue;
 
-            // Calculate score: edges preserved with already-mapped vertices
             int score = 0;
 
             for (int j = 0; j < n_g; j++) {
                 if (mapping[j] != -1) {
                     int mapped_u = mapping[j];
 
-                    // Edges j -> v in G vs mapped_u -> u in H
                     int g_mult_in = get_adj(adj_g, n_g, j, v);
                     int h_mult_in = get_adj(adj_h_current, n_h, mapped_u, u);
                     score += min(g_mult_in, h_mult_in);
 
-                    // Edges v -> j in G vs u -> mapped_u in H
                     int g_mult_out = get_adj(adj_g, n_g, v, j);
                     int h_mult_out = get_adj(adj_h_current, n_h, u, mapped_u);
                     score += min(g_mult_out, h_mult_out);
                 }
             }
 
-            // Self-loops
             int g_loop = get_adj(adj_g, n_g, v, v);
             int h_loop = get_adj(adj_h_current, n_h, u, u);
             score += min(g_loop, h_loop);
 
-            // Update best (prefer higher score, then higher H degree, then lower index)
             int u_deg = h_info[u].total_degree;
             if (score > best_score ||
                 (score == best_score && u_deg > best_h_degree) ||
@@ -141,11 +135,8 @@ static int *find_greedy_mapping(int n_g, const int *adj_g,
         }
 
         if (best_u == -1) {
-            // No valid mapping possible
             free(mapping);
             free(used_h);
-            free(sorted_g);
-            free(h_info);
             *out_deficit = -1;
             return NULL;
         }
@@ -155,17 +146,8 @@ static int *find_greedy_mapping(int n_g, const int *adj_g,
     }
 
     free(used_h);
-    free(sorted_g);
-    free(h_info);
 
-    // Check distinctness
-    if (mapping_exists(existing_mappings, num_existing, mapping, n_g)) {
-        free(mapping);
-        *out_deficit = -1;
-        return NULL;
-    }
-
-    // Calculate actual deficit
+    // Calculate deficit
     int deficit = 0;
     for (int i = 0; i < n_g; i++) {
         for (int j = 0; j < n_g; j++) {
@@ -179,6 +161,57 @@ static int *find_greedy_mapping(int n_g, const int *adj_g,
 
     *out_deficit = deficit;
     return mapping;
+}
+
+// Find best greedy mapping by trying all possible first-vertex assignments
+static int *find_greedy_mapping(int n_g, const int *adj_g,
+                                 int n_h, const int *adj_h_current,
+                                 int **existing_mappings, int num_existing,
+                                 int *out_deficit) {
+    // Sort G vertices by degree (descending)
+    VertexInfo *sorted_g = (VertexInfo *)malloc(n_g * sizeof(VertexInfo));
+    calc_degrees(n_g, adj_g, sorted_g);
+    qsort(sorted_g, n_g, sizeof(VertexInfo), compare_vertices);
+
+    // Pre-calculate H vertex degrees
+    VertexInfo *h_info = (VertexInfo *)malloc(n_h * sizeof(VertexInfo));
+    calc_degrees(n_h, adj_h_current, h_info);
+
+    int *best_mapping = NULL;
+    int best_deficit = -1;
+
+    // Try each possible first-vertex assignment
+    // Use the highest-degree vertex in G as the "anchor"
+    int anchor_v = sorted_g[0].id;
+
+    for (int u = 0; u < n_h; u++) {
+        int deficit;
+        int *mapping = greedy_from_start(n_g, adj_g, n_h, adj_h_current,
+                                          sorted_g, h_info, anchor_v, u, &deficit);
+
+        if (mapping == NULL) continue;
+
+        // Check distinctness
+        if (mapping_exists(existing_mappings, num_existing, mapping, n_g)) {
+            free(mapping);
+            continue;
+        }
+
+        // Keep if better
+        if (best_mapping == NULL || deficit < best_deficit) {
+            free(best_mapping);
+            best_mapping = mapping;
+            best_deficit = deficit;
+        } else {
+            free(mapping);
+        }
+    }
+
+    free(sorted_g);
+    free(h_info);
+
+    *out_deficit = best_deficit;
+    return best_mapping;
 }
 
 // Apply mapping edges to H'
