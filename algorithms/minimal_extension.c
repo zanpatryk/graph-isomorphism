@@ -6,7 +6,7 @@
 #include <limits.h>
 
 #define MAX_VERTICES 20
-#define MAX_MAPPINGS 100
+#define MAX_MAPPINGS 4096
 
 // ============================================================================
 // Internal State for Backtracking (single mapping)

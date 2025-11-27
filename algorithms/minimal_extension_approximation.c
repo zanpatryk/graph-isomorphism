@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX_MAPPINGS 100
+#define MAX_MAPPINGS 4096
 
 // ============================================================================
 // Helper Structures

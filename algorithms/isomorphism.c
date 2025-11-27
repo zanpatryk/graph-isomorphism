@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_ISOMORPHISMS 1000  // Safety limit
+#define MAX_ISOMORPHISMS 1000
 
 // ============================================================================
 // Helper Functions
