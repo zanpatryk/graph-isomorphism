@@ -4,41 +4,89 @@
 #include "graph.h"
 #include "algorithms.h"
 
+static void print_usage(const char *prog_name) {
+    fprintf(stderr, "Usage: %s <command> <graph_file> [n]\n\n", prog_name);
+    fprintf(stderr, "Commands:\n");
+    fprintf(stderr, "  iso_exact <file> <n>       Find n subgraph isomorphisms (exact)\n");
+    fprintf(stderr, "  iso_approx <file> <n>      Find n subgraph isomorphisms (heuristic)\n");
+    fprintf(stderr, "  ext_exact <file> <n>       Find minimal extension for n isomorphisms (exact)\n");
+    fprintf(stderr, "  ext_approx <file> <n>      Find minimal extension for n isomorphisms (heuristic)\n");
+    fprintf(stderr, "\n");
+    fprintf(stderr, "Example:\n");
+    fprintf(stderr, "  %s iso_exact data/triangle-square.txt 3\n", prog_name);
+    fprintf(stderr, "  %s ext_approx data/compy.txt 2\n", prog_name);
+}
+
 int main(const int argc, char *argv[]) {
-    // 1. Check Arguments
+    // Check minimum arguments
     if (argc < 3) {
-        fprintf(stderr, "Usage: %s <function_name> <path_to_graph_data>\n", argv[0]);
-        fprintf(stderr, "Available functions:\n");
-        fprintf(stderr, "  minimal_extension\n");
-        fprintf(stderr, "  approximate_extension\n");
+        print_usage(argv[0]);
         return 1;
     }
 
-    const char *function_name = argv[1];
+    const char *command = argv[1];
     const char *file_path = argv[2];
+    int n = 1;  // Default
 
+    // Parse n parameter if provided
+    if (argc >= 4) {
+        n = atoi(argv[3]);
+        if (n < 1) {
+            fprintf(stderr, "Error: n must be at least 1.\n");
+            return 1;
+        }
+    }
+
+    // Load graphs
     int *adj_g = NULL, *adj_h = NULL;
     int n_g = 0, n_h = 0;
 
-    // 2. Load Graphs (Using our safe, existing loader from graph.c)
     if (load_graphs(file_path, &n_g, &adj_g, &n_h, &adj_h) != 0) {
-        // load_graphs prints its own error messages
         return 1;
     }
 
-    // 3. Run Algorithm
-    if (strcmp(function_name, "minimal_extension") == 0) {
-        solve_minimal_extension(n_g, adj_g, n_h, adj_h);
-    } else if (strcmp(function_name, "approximate_extension") == 0) {
-        solve_approximate_extension(n_g, adj_g, n_h, adj_h);
+    printf("Loaded G: %d vertices, H: %d vertices\n", n_g, n_h);
+    print_adj_matrix("G", n_g, adj_g);
+    print_adj_matrix("H", n_h, adj_h);
+
+    // Execute command
+    if (strcmp(command, "iso_exact") == 0) {
+        // Find n isomorphisms using exact algorithm
+        printf("\n=== Finding %d isomorphism(s) [EXACT] ===\n", n);
+        IsomorphismResult *result = find_isomorphisms_exact(n_g, adj_g, n_h, adj_h, n);
+        print_isomorphism_result(result);
+        free_isomorphism_result(result);
+
+    } else if (strcmp(command, "iso_approx") == 0) {
+        // Find n isomorphisms using heuristic
+        printf("\n=== Finding %d isomorphism(s) [HEURISTIC] ===\n", n);
+        IsomorphismResult *result = find_isomorphisms_greedy(n_g, adj_g, n_h, adj_h, n);
+        print_isomorphism_result(result);
+        free_isomorphism_result(result);
+
+    } else if (strcmp(command, "ext_exact") == 0) {
+        // Find minimal extension using exact algorithm
+        printf("\n=== Finding minimal extension for %d isomorphism(s) [EXACT] ===\n", n);
+        ExtensionResult *result = find_minimal_extension_exact(n_g, adj_g, n_h, adj_h, n);
+        print_extension_result(result, adj_g);
+        free_extension_result(result);
+
+    } else if (strcmp(command, "ext_approx") == 0) {
+        // Find minimal extension using heuristic
+        printf("\n=== Finding minimal extension for %d isomorphism(s) [HEURISTIC] ===\n", n);
+        ExtensionResult *result = find_minimal_extension_greedy(n_g, adj_g, n_h, adj_h, n);
+        print_extension_result(result, adj_g);
+        free_extension_result(result);
+
     } else {
-        fprintf(stderr, "Error: Unknown function '%s'\n", function_name);
+        fprintf(stderr, "Error: Unknown command '%s'\n\n", command);
+        print_usage(argv[0]);
         free(adj_g);
         free(adj_h);
         return 1;
     }
 
-    // 4. Cleanup
+    // Cleanup
     free(adj_g);
     free(adj_h);
     return 0;
