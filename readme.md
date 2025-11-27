@@ -67,13 +67,6 @@ Find minimal edges to add to H so that G can be embedded `n` times:
 ./aac ext_approx data/graph.txt 2
 ```
 
-### Legacy Commands (n=1)
-
-```bash
-./aac minimal_extension data/graph.txt
-./aac approximate_extension data/graph.txt
-```
-
 ## Examples
 
 ```bash
@@ -121,21 +114,3 @@ Extended H' adjacency matrix:
    1   0   1   0   0
    2   0   0   1   1
    ...
-```
-
-## Algorithm Complexity
-
-| Algorithm | Complexity | Notes |
-|-----------|------------|-------|
-| `iso_exact` | O(3^(nm/3)) | Exponential, exact |
-| `iso_approx` | O(n²m² + k·n³m) | Polynomial, may miss solutions |
-| `ext_exact` | O(k · m^n · n²) | Exponential per mapping |
-| `ext_approx` | O(k · n²m) | Polynomial, may not be minimal |
-
-Where n = |V(G)|, m = |V(H)|, k = number of isomorphisms requested.
-
-## Limitations
-
-- Maximum 20 vertices per graph (exact algorithms)
-- Maximum 100 mappings
-- Heuristic algorithms may not find all solutions or optimal extension
