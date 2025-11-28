@@ -7,123 +7,31 @@
 
 // --- Private Helper Functions ---
 
-static int parse_vertex_index(const char *token) {
-    const char *p = token;
-    while (*p && !isdigit((unsigned char) *p)) p++;
-    if (!*p) return -1;
-    const int v = strtol(p, NULL, 10);
-    return v - 1;
-}
-
-static int is_header_line(const char *s) {
-    if (!s || s[0] == '\0') return 0;
-    return strchr(s, '-') == NULL;
-}
-
-static int read_all_lines(const char *path, char ***out_lines, size_t *out_n) {
-    FILE *f = fopen(path, "r");
-    if (!f) return -1;
-
-    char buffer[4096]; // Standard buffer size, safe for normal text files
-    size_t cap = 128, cnt = 0;
-    char **lines = malloc(cap * sizeof(char *));
-
-    if (!lines) {
-        fclose(f);
-        return -1;
-    }
-
-    while (fgets(buffer, sizeof(buffer), f)) {
-        // Resize array if necessary
-        if (cnt >= cap) {
-            cap *= 2;
-            char **tmp = realloc(lines, cap * sizeof(char *));
-            if (!tmp) {
-                while (cnt--) free(lines[cnt]);
-                free(lines);
-                fclose(f);
-                return -1;
-            }
-            lines = tmp;
-        }
-
-        // Duplicate the buffer content
-        char *line_copy = strdup(buffer);
-        if (!line_copy) {
-            // Handle allocation failure for the string
-            while (cnt--) free(lines[cnt]);
-            free(lines);
-            fclose(f);
+static int read_adjacency_matrix(FILE *f, int n, int *adj) {
+    char buffer[4096];
+    for (int i = 0; i < n; ++i) {
+        if (!fgets(buffer, sizeof(buffer), f)) {
             return -1;
         }
-
-        trim_inplace(line_copy);
-        lines[cnt++] = line_copy;
-    }
-
-    fclose(f);
-    *out_lines = lines;
-    *out_n = cnt;
-    return 0;
-}
-
-static int parse_graph_at(char **lines, size_t nlines, size_t header_idx, int *n_out, int **adj_out) {
-    if (header_idx >= nlines) return -1;
-
-    size_t i = header_idx + 1;
-    while (i < nlines && lines[i][0] == '\0') ++i;
-    if (i >= nlines) return -1;
-
-    const int n = strtol(lines[i], NULL, 10);
-    if (n <= 0) return -1;
-
-    int *adj = calloc((size_t) n * (size_t) n, sizeof(int));
-    if (!adj) return -1;
-
-    i++;
-    for (; i < nlines; ++i) {
-        if (lines[i][0] == '\0') continue;
-        if (is_header_line(lines[i])) break;
-
-        char *copy = strdup(lines[i]);
-        char *lhs = strtok(copy, "-");
-        char *rhs = strtok(NULL, "-");
-
-        if (!lhs || !rhs) {
-            fprintf(stderr, "Skipping malformed edge line: '%s'\n", lines[i]);
-            free(copy);
+        
+        trim_inplace(buffer);
+        if (buffer[0] == '\0') {
+            // Skip empty lines
+            i--;
             continue;
         }
-
-        trim_inplace(lhs);
-        trim_inplace(rhs);
-        int u = parse_vertex_index(lhs);
-        int v = parse_vertex_index(rhs);
-
-        if (u < 0 || v < 0 || u >= n || v >= n) {
-            fprintf(stderr, "Skipping edge with invalid vertex '%s' (n=%d)\n", lines[i], n);
-            free(copy);
-            continue;
+        
+        // Parse space-separated values
+        char *token = strtok(buffer, " \t");
+        int j = 0;
+        while (token != NULL && j < n) {
+            adj[i * n + j] = (int) strtol(token, NULL, 10);
+            token = strtok(NULL, " \t");
+            j++;
         }
-
-        adj[u * n + v] += 1;
-        free(copy);
-    }
-
-    *n_out = n;
-    *adj_out = adj;
-    return 0;
-}
-
-static int find_header_indices(char **lines, size_t nlines, ssize_t *out_g, ssize_t *out_h) {
-    *out_g = -1;
-    *out_h = -1;
-    for (size_t i = 0; i < nlines; ++i) {
-        if (lines[i][0] == '\0') continue;
-        size_t L = strlen(lines[i]);
-        if (L == 1) {
-            if (lines[i][0] == 'g') *out_g = (ssize_t) i;
-            else if (lines[i][0] == 'h') *out_h = (ssize_t) i;
+        
+        if (j < n) {
+            fprintf(stderr, "Warning: Row %d has only %d elements, expected %d\n", i + 1, j, n);
         }
     }
     return 0;
@@ -147,39 +55,78 @@ void print_adj_matrix(const char *name, int n, const int *adj) {
 }
 
 int load_graphs(const char *path, int *n_g, int **adj_g, int *n_h, int **adj_h) {
-    char **lines = NULL;
-    size_t nlines = 0;
-
-    if (read_all_lines(path, &lines, &nlines) != 0) {
-        fprintf(stderr, "Failed to read file: %s\n", path);
+    FILE *f = fopen(path, "r");
+    if (!f) {
+        fprintf(stderr, "Failed to open file: %s\n", path);
         return 1;
     }
 
-    ssize_t idx_g = -1, idx_h = -1;
-    find_header_indices(lines, nlines, &idx_g, &idx_h);
-
-    if (idx_g < 0 || idx_h < 0) {
-        fprintf(stderr, "Both headers 'g' and 'h' must be present in %s\n", path);
-        for (size_t j = 0; j < nlines; ++j) free(lines[j]);
-        free(lines);
+    char buffer[4096];
+    
+    // Read first graph (G)
+    // Read number of vertices
+    if (!fgets(buffer, sizeof(buffer), f)) {
+        fprintf(stderr, "Failed to read number of vertices for graph G\n");
+        fclose(f);
         return 2;
     }
-
-    if (parse_graph_at(lines, nlines, (size_t) idx_g, n_g, adj_g) != 0) {
-        fprintf(stderr, "Failed parsing graph 'g'\n");
-        for (size_t j = 0; j < nlines; ++j) free(lines[j]);
-        free(lines);
+    trim_inplace(buffer);
+    *n_g = (int) strtol(buffer, NULL, 10);
+    if (*n_g <= 0) {
+        fprintf(stderr, "Invalid number of vertices for graph G: %d\n", *n_g);
+        fclose(f);
+        return 2;
+    }
+    
+    // Allocate and read adjacency matrix for G
+    *adj_g = calloc((size_t) (*n_g) * (size_t) (*n_g), sizeof(int));
+    if (!*adj_g) {
+        fprintf(stderr, "Memory allocation failed for graph G\n");
+        fclose(f);
         return 3;
     }
-    if (parse_graph_at(lines, nlines, (size_t) idx_h, n_h, adj_h) != 0) {
-        fprintf(stderr, "Failed parsing graph 'h'\n");
+    
+    if (read_adjacency_matrix(f, *n_g, *adj_g) != 0) {
+        fprintf(stderr, "Failed to read adjacency matrix for graph G\n");
         free(*adj_g);
-        for (size_t j = 0; j < nlines; ++j) free(lines[j]);
-        free(lines);
+        fclose(f);
+        return 3;
+    }
+    
+    // Read second graph (H)
+    // Read number of vertices
+    if (!fgets(buffer, sizeof(buffer), f)) {
+        fprintf(stderr, "Failed to read number of vertices for graph H\n");
+        free(*adj_g);
+        fclose(f);
         return 4;
     }
-
-    for (size_t j = 0; j < nlines; ++j) free(lines[j]);
-    free(lines);
+    trim_inplace(buffer);
+    *n_h = (int) strtol(buffer, NULL, 10);
+    if (*n_h <= 0) {
+        fprintf(stderr, "Invalid number of vertices for graph H: %d\n", *n_h);
+        free(*adj_g);
+        fclose(f);
+        return 4;
+    }
+    
+    // Allocate and read adjacency matrix for H
+    *adj_h = calloc((size_t) (*n_h) * (size_t) (*n_h), sizeof(int));
+    if (!*adj_h) {
+        fprintf(stderr, "Memory allocation failed for graph H\n");
+        free(*adj_g);
+        fclose(f);
+        return 5;
+    }
+    
+    if (read_adjacency_matrix(f, *n_h, *adj_h) != 0) {
+        fprintf(stderr, "Failed to read adjacency matrix for graph H\n");
+        free(*adj_g);
+        free(*adj_h);
+        fclose(f);
+        return 5;
+    }
+    
+    fclose(f);
     return 0;
 }
