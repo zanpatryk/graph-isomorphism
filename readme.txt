@@ -21,24 +21,24 @@ gcc -o aac main.c utils.c graph.c \
 
 ## Input Format
 
-Create a text file defining graphs **G** and **H**:
-- Header line: `g` or `h`
-- Second line: number of vertices
-- Remaining lines: edges as `source-dest` (1-indexed)
+Create a text file defining graphs **G** and **H** using adjacency matrices:
+- First line: number of vertices for graph G
+- Next n lines: adjacency matrix for G (space-separated values, n×n matrix)
+- Next line: number of vertices for graph H
+- Next m lines: adjacency matrix for H (space-separated values, m×m matrix)
+
+Each value in the adjacency matrix represents the number of edges from vertex i to vertex j (0-indexed internally, but displayed as 1-indexed).
 
 ```text
-g
 3
-1-2
-2-3
-3-1
-
-h
+0 1 0
+0 0 1
+1 0 0
 4
-1-2
-2-3
-3-4
-4-1
+0 1 0 0
+0 0 1 0
+0 0 0 1
+1 0 0 0
 ```
 
 ## Commands
@@ -49,10 +49,10 @@ Find up to `n` distinct subgraph isomorphisms from G to H:
 
 ```bash
 # Exact algorithm (Bron-Kerbosch on product graph)
-./aac iso_exact ../data/graph.txt 3
+./aac iso_exact data/graph.txt 3
 
 # Heuristic algorithm (greedy clique)
-./aac iso_approx ../data/graph.txt 3
+./aac iso_approx data/graph.txt 3
 ```
 
 ### Finding Minimal Extensions
@@ -61,10 +61,10 @@ Find minimal edges to add to H so that G can be embedded `n` times:
 
 ```bash
 # Exact algorithm (backtracking, iterative for n>1)
-./aac ext_exact ../data/graph.txt 2
+./aac ext_exact data/graph.txt 2
 
 # Heuristic algorithm (greedy matching, iterative)
-./aac ext_approx ../data/graph.txt 2
+./aac ext_approx data/graph.txt 2
 ```
 
 ## Running All Tests
@@ -96,13 +96,13 @@ To regenerate all results, simply run:
 
 ```bash
 # Find if triangle is subgraph of square (with diagonal needed)
-./aac iso_exact ../data/triangle-square.txt 1
+./aac iso_exact data/triangle-square.txt 1
 
 # Find 3 ways to embed triangle into itself
-./aac iso_exact ../data/identical_triangles.txt 3
+./aac iso_exact data/identical_triangles.txt 3
 
 # Find minimal extension for 2 embeddings
-./aac ext_approx ../data/compy.txt 2
+./aac ext_approx data/compy.txt 2
 ```
 
 ## Output
