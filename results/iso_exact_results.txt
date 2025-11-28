@@ -1,8 +1,8 @@
 ==========================================
 Results for Algorithm: iso_exact
 ==========================================
-Date: Fri Nov 28 11:47:50 CET 2025
-N value: 3
+Date: Fri Nov 28 12:57:24 CET 2025
+N value: 100
 Total data files: 23
 ==========================================
 
@@ -24,7 +24,7 @@ Graph name='H' n=3
    3   1   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -64,7 +64,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -90,26 +90,8 @@ Graph name='H' n=5
    5   1   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
-
---- Isomorphism Result ---
-Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
-
-Mapping 1:
-    G_1 -> H_1
-    G_2 -> H_2
-    G_3 -> H_3
-
-Mapping 2:
-    G_1 -> H_1
-    G_2 -> H_3
-    G_3 -> H_4
-
-Mapping 3:
-    G_1 -> H_2
-    G_2 -> H_3
-    G_3 -> H_4
+=== Finding 100 isomorphism(s) [EXACT] ===
+    ERROR: Test failed for 03_perfect_subgraph
 
 
 ----------------------------------------
@@ -127,7 +109,7 @@ Graph name='H' n=3
    3   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -159,7 +141,7 @@ Graph name='H' n=3
    3   0   0   1
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -192,7 +174,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -217,7 +199,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -248,7 +230,7 @@ Graph name='H' n=3
    3   1   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 G has more vertices than H. No isomorphism possible.
 
 --- Isomorphism Result ---
@@ -259,46 +241,7 @@ Number of isomorphisms found: 0
 ----------------------------------------
 Data File: 09_star_graph (09_star_graph.txt)
 ----------------------------------------
-Loaded G: 4 vertices, H: 5 vertices
-Graph name='G' n=4
-       1   2   3   4
-   1   0   1   1   1
-   2   0   0   0   0
-   3   0   0   0   0
-   4   0   0   0   0
-
-Graph name='H' n=5
-       1   2   3   4   5
-   1   0   1   1   1   1
-   2   0   0   0   0   0
-   3   0   0   0   0   0
-   4   0   0   0   0   0
-   5   0   0   0   0   0
-
-
-=== Finding 3 isomorphism(s) [EXACT] ===
-
---- Isomorphism Result ---
-Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
-
-Mapping 1:
-    G_1 -> H_1
-    G_2 -> H_2
-    G_3 -> H_3
-    G_4 -> H_4
-
-Mapping 2:
-    G_1 -> H_1
-    G_2 -> H_2
-    G_3 -> H_3
-    G_4 -> H_5
-
-Mapping 3:
-    G_1 -> H_1
-    G_2 -> H_2
-    G_3 -> H_4
-    G_4 -> H_5
+    ERROR: Test failed for 09_star_graph
 
 
 ----------------------------------------
@@ -320,7 +263,7 @@ Graph name='H' n=4
    4   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -356,7 +299,7 @@ Graph name='H' n=7
    7   1   0   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -385,7 +328,7 @@ Graph name='H' n=6
    6   1   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -413,11 +356,11 @@ Graph name='H' n=6
    6   0   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 4
 
 Mapping 1:
     G_1 -> H_1
@@ -436,6 +379,12 @@ Mapping 3:
     G_2 -> H_1
     G_3 -> H_4
     G_4 -> H_5
+
+Mapping 4:
+    G_1 -> H_2
+    G_2 -> H_1
+    G_3 -> H_5
+    G_4 -> H_4
 
 
 ----------------------------------------
@@ -459,11 +408,11 @@ Graph name='H' n=6
    6   1   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 6
 
 Mapping 1:
     G_1 -> H_1
@@ -482,6 +431,24 @@ Mapping 3:
     G_2 -> H_4
     G_3 -> H_5
     G_4 -> H_6
+
+Mapping 4:
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_6
+    G_4 -> H_1
+
+Mapping 5:
+    G_1 -> H_5
+    G_2 -> H_6
+    G_3 -> H_1
+    G_4 -> H_2
+
+Mapping 6:
+    G_1 -> H_6
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_3
 
 
 ----------------------------------------
@@ -502,7 +469,7 @@ Graph name='H' n=4
    4   2   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 Product graph is empty. No isomorphism possible.
 
 --- Isomorphism Result ---
@@ -530,11 +497,11 @@ Graph name='H' n=5
    5   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 4
 
 Mapping 1:
     G_1 -> H_1
@@ -553,6 +520,12 @@ Mapping 3:
     G_2 -> H_5
     G_3 -> H_1
     G_4 -> H_2
+
+Mapping 4:
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_2
+    G_4 -> H_3
 
 
 ----------------------------------------
@@ -577,11 +550,11 @@ Graph name='H' n=6
    6   0   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 6
 
 Mapping 1:
     G_1 -> H_1
@@ -604,37 +577,32 @@ Mapping 3:
     G_4 -> H_5
     G_5 -> H_6
 
+Mapping 4:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_4
+    G_4 -> H_5
+    G_5 -> H_6
+
+Mapping 5:
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_5
+    G_5 -> H_6
+
+Mapping 6:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_5
+    G_5 -> H_6
+
 
 ----------------------------------------
 Data File: 18_larger_test (18_larger_test.txt)
 ----------------------------------------
-Loaded G: 6 vertices, H: 8 vertices
-Graph name='G' n=6
-       1   2   3   4   5   6
-   1   0   1   1   0   0   0
-   2   0   0   1   1   0   0
-   3   0   0   0   1   1   0
-   4   0   0   0   0   1   1
-   5   0   0   0   0   0   1
-   6   1   0   0   0   0   0
-
-Graph name='H' n=8
-       1   2   3   4   5   6   7   8
-   1   0   1   0   1   0   0   0   0
-   2   0   0   1   0   1   0   0   0
-   3   0   0   0   1   0   1   0   0
-   4   0   0   0   0   1   0   1   0
-   5   0   0   0   0   0   1   0   1
-   6   0   0   0   0   0   0   1   0
-   7   0   0   0   0   0   0   0   1
-   8   1   0   0   0   0   0   0   0
-
-
-=== Finding 3 isomorphism(s) [EXACT] ===
-
---- Isomorphism Result ---
-Subgraph isomorphism exists: NO
-Number of isomorphisms found: 0
+    ERROR: Test failed for 18_larger_test
 
 
 ----------------------------------------
@@ -657,7 +625,7 @@ Graph name='H' n=5
    5   1   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -682,11 +650,11 @@ Graph name='H' n=4
    4   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 24
 
 Mapping 1:
     G_1 -> H_1
@@ -702,6 +670,111 @@ Mapping 3:
     G_1 -> H_1
     G_2 -> H_3
     G_3 -> H_4
+
+Mapping 4:
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_2
+
+Mapping 5:
+    G_1 -> H_1
+    G_2 -> H_4
+    G_3 -> H_3
+
+Mapping 6:
+    G_1 -> H_1
+    G_2 -> H_4
+    G_3 -> H_2
+
+Mapping 7:
+    G_1 -> H_2
+    G_2 -> H_1
+    G_3 -> H_4
+
+Mapping 8:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_4
+
+Mapping 9:
+    G_1 -> H_2
+    G_2 -> H_4
+    G_3 -> H_3
+
+Mapping 10:
+    G_1 -> H_2
+    G_2 -> H_4
+    G_3 -> H_1
+
+Mapping 11:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_1
+
+Mapping 12:
+    G_1 -> H_2
+    G_2 -> H_1
+    G_3 -> H_3
+
+Mapping 13:
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_4
+
+Mapping 14:
+    G_1 -> H_3
+    G_2 -> H_2
+    G_3 -> H_4
+
+Mapping 15:
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_2
+
+Mapping 16:
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_1
+
+Mapping 17:
+    G_1 -> H_3
+    G_2 -> H_2
+    G_3 -> H_1
+
+Mapping 18:
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_2
+
+Mapping 19:
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_3
+
+Mapping 20:
+    G_1 -> H_4
+    G_2 -> H_2
+    G_3 -> H_3
+
+Mapping 21:
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_2
+
+Mapping 22:
+    G_1 -> H_4
+    G_2 -> H_3
+    G_3 -> H_2
+
+Mapping 23:
+    G_1 -> H_4
+    G_2 -> H_3
+    G_3 -> H_1
+
+Mapping 24:
+    G_1 -> H_4
+    G_2 -> H_2
+    G_3 -> H_1
 
 
 ----------------------------------------
@@ -726,7 +799,7 @@ Graph name='H' n=6
    6   0   0   0   1   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -749,7 +822,7 @@ Graph name='H' n=3
    3   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -782,7 +855,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [EXACT] ===
+=== Finding 100 isomorphism(s) [EXACT] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO

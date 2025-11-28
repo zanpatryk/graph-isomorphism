@@ -1,8 +1,8 @@
 ==========================================
 Results for Algorithm: ext_approx
 ==========================================
-Date: Fri Nov 28 11:47:50 CET 2025
-N value: 3
+Date: Fri Nov 28 12:57:25 CET 2025
+N value: 100
 Total data files: 23
 ==========================================
 
@@ -24,10 +24,11 @@ Graph name='H' n=3
    3   1   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 0, edges added = 0
+Could only find 3 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
 Total edges added: 0
@@ -76,14 +77,17 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 1, edges added = 1
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 1, edges added = 1
+Mapping 5: deficit = 0, edges added = 0
+Could only find 5 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 1
-Mappings found: 3
+Total edges added: 2
+Mappings found: 5
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -100,12 +104,22 @@ Mapping 3 (G -> H):
     G_2 -> H_1
     G_3 -> H_2
 
+Mapping 4 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_3
+
+Mapping 5 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4
-   1   0   1   0   0
+   1   0   1   1   0
    2   0   0   1   0
    3   1   0   0   1
    4   1   0   0   0
@@ -130,14 +144,17 @@ Graph name='H' n=5
    5   1   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 0, edges added = 0
+Mapping 5: deficit = 0, edges added = 0
+Could only find 5 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
 Total edges added: 0
-Mappings found: 3
+Mappings found: 5
 
 Mapping 1 (G -> H):
     G_1 -> H_5
@@ -153,6 +170,16 @@ Mapping 3 (G -> H):
     G_1 -> H_1
     G_2 -> H_3
     G_3 -> H_4
+
+Mapping 4 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_5
+
+Mapping 5 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_1
 
 Edges added to H:
     None. G is already embeddable in H.
@@ -181,10 +208,11 @@ Graph name='H' n=3
    3   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 0, edges added = 0
+Could only find 3 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
 Total edges added: 0
@@ -225,10 +253,11 @@ Graph name='H' n=3
    3   0   0   1
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 1, edges added = 1
+Could only find 3 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
 Total edges added: 1
@@ -274,14 +303,16 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 3, edges added = 3
 Mapping 2: deficit = 2, edges added = 2
 Mapping 3: deficit = 1, edges added = 1
+Mapping 4: deficit = 4, edges added = 4
+Could only find 4 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 6
-Mappings found: 3
+Total edges added: 10
+Mappings found: 4
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -298,15 +329,20 @@ Mapping 3 (G -> H):
     G_2 -> H_1
     G_3 -> H_2
 
+Mapping 4 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_3
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4
-   1   0   3   0   0
+   1   0   3   1   0
    2   0   0   3   0
-   3   3   0   0   1
-   4   1   0   0   0
+   3   3   0   0   2
+   4   3   0   0   0
 
 
 ----------------------------------------
@@ -327,14 +363,17 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 1, edges added = 1
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 1, edges added = 1
+Mapping 5: deficit = 1, edges added = 1
+Could only find 5 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 1
-Mappings found: 3
+Total edges added: 3
+Mappings found: 5
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -351,12 +390,22 @@ Mapping 3 (G -> H):
     G_2 -> H_2
     G_3 -> H_1
 
+Mapping 4 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_2
+
+Mapping 5 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_1
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4
-   1   0   1   0   0
+   1   0   1   1   1
    2   1   0   1   0
    3   0   1   0   1
    4   1   0   0   0
@@ -382,7 +431,7 @@ Graph name='H' n=3
    3   1   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 
 --- Minimal Extension Result ---
 Total edges added: 0
@@ -418,14 +467,17 @@ Graph name='H' n=5
    5   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 3, edges added = 3
 Mapping 3: deficit = 3, edges added = 3
+Mapping 4: deficit = 3, edges added = 3
+Mapping 5: deficit = 3, edges added = 3
+Could only find 5 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 6
-Mappings found: 3
+Total edges added: 12
+Mappings found: 5
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -445,6 +497,18 @@ Mapping 3 (G -> H):
     G_3 -> H_2
     G_4 -> H_4
 
+Mapping 4 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_3
+
+Mapping 5 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_3
+
 Edges added to H:
     (See extended adjacency matrix)
 
@@ -453,8 +517,8 @@ Extended H' adjacency matrix:
    1   0   1   1   1   1
    2   1   0   1   1   0
    3   1   1   0   1   0
-   4   0   0   0   0   0
-   5   0   0   0   0   0
+   4   1   1   1   0   0
+   5   1   1   1   0   0
 
 
 ----------------------------------------
@@ -476,14 +540,18 @@ Graph name='H' n=4
    4   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 3, edges added = 3
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 2, edges added = 2
+Mapping 5: deficit = 0, edges added = 0
+Mapping 6: deficit = 1, edges added = 1
+Could only find 6 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 3
-Mappings found: 3
+Total edges added: 6
+Mappings found: 6
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -503,6 +571,24 @@ Mapping 3 (G -> H):
     G_3 -> H_3
     G_4 -> H_4
 
+Mapping 4 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_4
+    G_4 -> H_2
+
+Mapping 5 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_4
+
+Mapping 6 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_3
+
 Edges added to H:
     (See extended adjacency matrix)
 
@@ -510,8 +596,8 @@ Extended H' adjacency matrix:
        1   2   3   4
    1   0   1   1   1
    2   1   0   1   1
-   3   1   0   0   1
-   4   1   0   0   0
+   3   1   1   0   1
+   4   1   1   1   0
 
 
 ----------------------------------------
@@ -537,14 +623,25 @@ Graph name='H' n=7
    7   1   0   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 2, edges added = 2
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 2, edges added = 2
+Mapping 4: deficit = 1, edges added = 1
+Mapping 5: deficit = 0, edges added = 0
+Mapping 6: deficit = 2, edges added = 2
+Mapping 7: deficit = 0, edges added = 0
+Mapping 8: deficit = 0, edges added = 0
+Mapping 9: deficit = 1, edges added = 1
+Mapping 10: deficit = 2, edges added = 2
+Mapping 11: deficit = 1, edges added = 1
+Mapping 12: deficit = 0, edges added = 0
+Mapping 13: deficit = 0, edges added = 0
+Could only find 13 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 4
-Mappings found: 3
+Total edges added: 11
+Mappings found: 13
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -567,18 +664,88 @@ Mapping 3 (G -> H):
     G_4 -> H_2
     G_5 -> H_5
 
+Mapping 4 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_3
+    G_5 -> H_5
+
+Mapping 5 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_2
+    G_4 -> H_5
+    G_5 -> H_6
+
+Mapping 6 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_2
+    G_4 -> H_5
+    G_5 -> H_1
+
+Mapping 7 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_3
+    G_5 -> H_4
+
+Mapping 8 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_5
+    G_3 -> H_1
+    G_4 -> H_3
+    G_5 -> H_4
+
+Mapping 9 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_7
+    G_3 -> H_5
+    G_4 -> H_1
+    G_5 -> H_3
+
+Mapping 10 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_7
+    G_3 -> H_3
+    G_4 -> H_5
+    G_5 -> H_1
+
+Mapping 11 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_7
+    G_3 -> H_5
+    G_4 -> H_3
+    G_5 -> H_1
+
+Mapping 12 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_3
+    G_3 -> H_6
+    G_4 -> H_1
+    G_5 -> H_2
+
+Mapping 13 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_7
+    G_3 -> H_1
+    G_4 -> H_3
+    G_5 -> H_5
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4   5   6   7
-   1   0   1   1   0   0   0   0
+   1   0   1   1   0   0   1   0
    2   0   0   1   0   1   0   0
-   3   0   1   0   1   0   1   0
-   4   0   0   0   0   1   0   0
-   5   0   0   1   0   0   1   0
+   3   1   1   0   1   1   1   0
+   4   0   1   0   0   1   0   0
+   5   1   0   1   0   0   1   0
    6   1   0   0   0   0   0   1
-   7   1   0   0   0   0   0   0
+   7   1   0   1   0   1   0   0
 
 
 ----------------------------------------
@@ -603,14 +770,30 @@ Graph name='H' n=6
    6   1   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 3, edges added = 3
 Mapping 2: deficit = 2, edges added = 2
 Mapping 3: deficit = 2, edges added = 2
+Mapping 4: deficit = 0, edges added = 0
+Mapping 5: deficit = 1, edges added = 1
+Mapping 6: deficit = 0, edges added = 0
+Mapping 7: deficit = 0, edges added = 0
+Mapping 8: deficit = 2, edges added = 2
+Mapping 9: deficit = 0, edges added = 0
+Mapping 10: deficit = 0, edges added = 0
+Mapping 11: deficit = 0, edges added = 0
+Mapping 12: deficit = 1, edges added = 1
+Mapping 13: deficit = 0, edges added = 0
+Mapping 14: deficit = 0, edges added = 0
+Mapping 15: deficit = 0, edges added = 0
+Mapping 16: deficit = 0, edges added = 0
+Mapping 17: deficit = 5, edges added = 5
+Mapping 18: deficit = 0, edges added = 0
+Could only find 18 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 7
-Mappings found: 3
+Total edges added: 16
+Mappings found: 18
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -633,17 +816,122 @@ Mapping 3 (G -> H):
     G_4 -> H_4
     G_5 -> H_6
 
+Mapping 4 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_5
+    G_4 -> H_4
+    G_5 -> H_3
+
+Mapping 5 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_5
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_6
+
+Mapping 6 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_2
+
+Mapping 7 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_5
+    G_5 -> H_6
+
+Mapping 8 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_3
+    G_3 -> H_2
+    G_4 -> H_4
+    G_5 -> H_6
+
+Mapping 9 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_2
+    G_5 -> H_3
+
+Mapping 10 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_3
+    G_4 -> H_2
+    G_5 -> H_6
+
+Mapping 11 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_4
+    G_3 -> H_3
+    G_4 -> H_2
+    G_5 -> H_6
+
+Mapping 12 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_2
+    G_5 -> H_6
+
+Mapping 13 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_2
+    G_5 -> H_5
+
+Mapping 14 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_3
+    G_5 -> H_6
+
+Mapping 15 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_3
+    G_3 -> H_5
+    G_4 -> H_2
+    G_5 -> H_6
+
+Mapping 16 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_2
+    G_5 -> H_6
+
+Mapping 17 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_1
+    G_5 -> H_4
+
+Mapping 18 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_2
+    G_5 -> H_1
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4   5   6
    1   0   1   1   1   1   0
-   2   0   0   1   1   1   1
-   3   0   0   0   1   1   0
+   2   1   0   1   1   1   1
+   3   1   1   0   1   1   1
    4   0   1   1   0   1   1
-   5   0   0   0   1   0   1
-   6   1   0   0   0   0   0
+   5   0   1   1   1   0   1
+   6   1   1   1   1   0   0
 
 
 ----------------------------------------
@@ -667,14 +955,33 @@ Graph name='H' n=6
    6   0   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 1, edges added = 1
+Mapping 4: deficit = 0, edges added = 0
+Mapping 5: deficit = 2, edges added = 2
+Mapping 6: deficit = 0, edges added = 0
+Mapping 7: deficit = 1, edges added = 1
+Mapping 8: deficit = 0, edges added = 0
+Mapping 9: deficit = 0, edges added = 0
+Mapping 10: deficit = 1, edges added = 1
+Mapping 11: deficit = 0, edges added = 0
+Mapping 12: deficit = 3, edges added = 3
+Mapping 13: deficit = 0, edges added = 0
+Mapping 14: deficit = 0, edges added = 0
+Mapping 15: deficit = 2, edges added = 2
+Mapping 16: deficit = 1, edges added = 1
+Mapping 17: deficit = 0, edges added = 0
+Mapping 18: deficit = 0, edges added = 0
+Mapping 19: deficit = 0, edges added = 0
+Mapping 20: deficit = 0, edges added = 0
+Mapping 21: deficit = 1, edges added = 1
+Could only find 21 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 1
-Mappings found: 3
+Total edges added: 12
+Mappings found: 21
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -694,17 +1001,125 @@ Mapping 3 (G -> H):
     G_3 -> H_6
     G_4 -> H_4
 
+Mapping 4 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_4
+    G_4 -> H_6
+
+Mapping 5 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_6
+
+Mapping 6 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_5
+    G_4 -> H_6
+
+Mapping 7 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_6
+
+Mapping 8 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_4
+    G_3 -> H_6
+    G_4 -> H_5
+
+Mapping 9 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_4
+    G_3 -> H_6
+    G_4 -> H_5
+
+Mapping 10 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_6
+    G_4 -> H_5
+
+Mapping 11 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_6
+
+Mapping 12 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_6
+    G_4 -> H_1
+
+Mapping 13 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_1
+    G_4 -> H_6
+
+Mapping 14 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_4
+    G_3 -> H_1
+    G_4 -> H_6
+
+Mapping 15 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_1
+
+Mapping 16 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_6
+    G_4 -> H_4
+
+Mapping 17 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_4
+    G_4 -> H_6
+
+Mapping 18 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_5
+    G_3 -> H_4
+    G_4 -> H_6
+
+Mapping 19 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_5
+    G_3 -> H_4
+    G_4 -> H_6
+
+Mapping 20 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_4
+    G_3 -> H_6
+    G_4 -> H_1
+
+Mapping 21 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_5
+    G_3 -> H_1
+    G_4 -> H_4
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4   5   6
    1   0   0   0   1   1   1
-   2   0   0   0   1   1   0
-   3   0   0   0   1   0   1
-   4   0   0   0   0   0   0
-   5   0   0   0   0   0   0
-   6   0   0   0   0   0   0
+   2   0   0   0   1   1   1
+   3   0   0   0   1   1   1
+   4   1   0   0   0   1   1
+   5   1   0   0   1   0   1
+   6   1   0   0   1   1   0
 
 
 ----------------------------------------
@@ -728,14 +1143,18 @@ Graph name='H' n=6
    6   1   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 0, edges added = 0
+Mapping 5: deficit = 0, edges added = 0
+Mapping 6: deficit = 0, edges added = 0
+Could only find 6 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
 Total edges added: 0
-Mappings found: 3
+Mappings found: 6
 
 Mapping 1 (G -> H):
     G_1 -> H_6
@@ -754,6 +1173,24 @@ Mapping 3 (G -> H):
     G_2 -> H_3
     G_3 -> H_4
     G_4 -> H_5
+
+Mapping 4 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_6
+
+Mapping 5 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_6
+    G_4 -> H_1
+
+Mapping 6 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_6
+    G_3 -> H_1
+    G_4 -> H_2
 
 Edges added to H:
     None. G is already embeddable in H.
@@ -786,14 +1223,16 @@ Graph name='H' n=4
    4   2   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 5, edges added = 5
 Mapping 2: deficit = 4, edges added = 4
 Mapping 3: deficit = 2, edges added = 2
+Mapping 4: deficit = 7, edges added = 7
+Could only find 4 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 11
-Mappings found: 3
+Total edges added: 18
+Mappings found: 4
 
 Mapping 1 (G -> H):
     G_1 -> H_4
@@ -810,15 +1249,20 @@ Mapping 3 (G -> H):
     G_2 -> H_4
     G_3 -> H_1
 
+Mapping 4 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_4
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4
    1   0   5   0   0
-   2   0   0   1   5
-   3   0   0   0   1
-   4   5   0   0   0
+   2   0   0   5   5
+   3   0   0   0   3
+   4   5   1   0   0
 
 
 ----------------------------------------
@@ -841,14 +1285,19 @@ Graph name='H' n=5
    5   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 1, edges added = 1
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 1, edges added = 1
+Mapping 5: deficit = 0, edges added = 0
+Mapping 6: deficit = 0, edges added = 0
+Mapping 7: deficit = 2, edges added = 2
+Could only find 7 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 1
-Mappings found: 3
+Total edges added: 4
+Mappings found: 7
 
 Mapping 1 (G -> H):
     G_1 -> H_4
@@ -868,16 +1317,40 @@ Mapping 3 (G -> H):
     G_3 -> H_4
     G_4 -> H_5
 
+Mapping 4 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_2
+    G_4 -> H_1
+
+Mapping 5 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_1
+    G_3 -> H_3
+    G_4 -> H_4
+
+Mapping 6 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_2
+    G_4 -> H_1
+
+Mapping 7 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_2
+    G_3 -> H_1
+    G_4 -> H_3
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4   5
-   1   0   1   0   0   0
-   2   0   0   1   0   0
+   1   0   1   1   0   0
+   2   1   0   1   0   0
    3   0   0   0   1   0
    4   0   0   0   0   1
-   5   0   0   0   0   0
+   5   0   1   0   0   0
 
 
 ----------------------------------------
@@ -902,14 +1375,22 @@ Graph name='H' n=6
    6   0   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 4, edges added = 4
+Mapping 4: deficit = 0, edges added = 0
+Mapping 5: deficit = 0, edges added = 0
+Mapping 6: deficit = 3, edges added = 3
+Mapping 7: deficit = 0, edges added = 0
+Mapping 8: deficit = 2, edges added = 2
+Mapping 9: deficit = 0, edges added = 0
+Mapping 10: deficit = 1, edges added = 1
+Could only find 10 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 4
-Mappings found: 3
+Total edges added: 10
+Mappings found: 10
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -932,6 +1413,55 @@ Mapping 3 (G -> H):
     G_4 -> H_6
     G_5 -> H_1
 
+Mapping 4 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_5
+    G_5 -> H_6
+
+Mapping 5 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_4
+    G_4 -> H_5
+    G_5 -> H_6
+
+Mapping 6 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_5
+    G_4 -> H_6
+    G_5 -> H_3
+
+Mapping 7 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_3
+    G_4 -> H_5
+    G_5 -> H_6
+
+Mapping 8 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_1
+    G_3 -> H_3
+    G_4 -> H_6
+    G_5 -> H_4
+
+Mapping 9 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_1
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_6
+
+Mapping 10 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_1
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_5
+
 Edges added to H:
     (See extended adjacency matrix)
 
@@ -940,9 +1470,9 @@ Extended H' adjacency matrix:
    1   0   1   1   1   1   1
    2   0   0   1   1   1   1
    3   1   0   0   1   1   1
-   4   1   0   0   0   1   1
-   5   1   0   0   0   0   1
-   6   1   0   0   0   0   0
+   4   1   0   1   0   1   1
+   5   1   0   1   1   0   1
+   6   1   0   1   1   1   0
 
 
 ----------------------------------------
@@ -970,14 +1500,56 @@ Graph name='H' n=8
    8   1   0   0   0   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 3, edges added = 3
 Mapping 2: deficit = 1, edges added = 1
 Mapping 3: deficit = 1, edges added = 1
+Mapping 4: deficit = 2, edges added = 2
+Mapping 5: deficit = 1, edges added = 1
+Mapping 6: deficit = 0, edges added = 0
+Mapping 7: deficit = 0, edges added = 0
+Mapping 8: deficit = 1, edges added = 1
+Mapping 9: deficit = 0, edges added = 0
+Mapping 10: deficit = 0, edges added = 0
+Mapping 11: deficit = 2, edges added = 2
+Mapping 12: deficit = 2, edges added = 2
+Mapping 13: deficit = 2, edges added = 2
+Mapping 14: deficit = 0, edges added = 0
+Mapping 15: deficit = 1, edges added = 1
+Mapping 16: deficit = 0, edges added = 0
+Mapping 17: deficit = 2, edges added = 2
+Mapping 18: deficit = 0, edges added = 0
+Mapping 19: deficit = 1, edges added = 1
+Mapping 20: deficit = 0, edges added = 0
+Mapping 21: deficit = 0, edges added = 0
+Mapping 22: deficit = 0, edges added = 0
+Mapping 23: deficit = 1, edges added = 1
+Mapping 24: deficit = 0, edges added = 0
+Mapping 25: deficit = 0, edges added = 0
+Mapping 26: deficit = 1, edges added = 1
+Mapping 27: deficit = 0, edges added = 0
+Mapping 28: deficit = 0, edges added = 0
+Mapping 29: deficit = 0, edges added = 0
+Mapping 30: deficit = 0, edges added = 0
+Mapping 31: deficit = 0, edges added = 0
+Mapping 32: deficit = 0, edges added = 0
+Mapping 33: deficit = 0, edges added = 0
+Mapping 34: deficit = 2, edges added = 2
+Mapping 35: deficit = 0, edges added = 0
+Mapping 36: deficit = 0, edges added = 0
+Mapping 37: deficit = 0, edges added = 0
+Mapping 38: deficit = 0, edges added = 0
+Mapping 39: deficit = 0, edges added = 0
+Mapping 40: deficit = 1, edges added = 1
+Mapping 41: deficit = 1, edges added = 1
+Mapping 42: deficit = 0, edges added = 0
+Mapping 43: deficit = 1, edges added = 1
+Mapping 44: deficit = 0, edges added = 0
+Could only find 44 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 5
-Mappings found: 3
+Total edges added: 26
+Mappings found: 44
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -1003,19 +1575,347 @@ Mapping 3 (G -> H):
     G_5 -> H_2
     G_6 -> H_5
 
+Mapping 4 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_6
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_1
+    G_6 -> H_2
+
+Mapping 5 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_6
+    G_3 -> H_4
+    G_4 -> H_1
+    G_5 -> H_2
+    G_6 -> H_5
+
+Mapping 6 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_6
+    G_3 -> H_3
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_2
+
+Mapping 7 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_5
+    G_4 -> H_3
+    G_5 -> H_6
+    G_6 -> H_4
+
+Mapping 8 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_6
+    G_3 -> H_1
+    G_4 -> H_4
+    G_5 -> H_5
+    G_6 -> H_2
+
+Mapping 9 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_6
+    G_3 -> H_4
+    G_4 -> H_1
+    G_5 -> H_5
+    G_6 -> H_2
+
+Mapping 10 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_3
+    G_3 -> H_6
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_2
+
+Mapping 11 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_3
+    G_3 -> H_8
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_2
+
+Mapping 12 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_2
+    G_4 -> H_3
+    G_5 -> H_1
+    G_6 -> H_6
+
+Mapping 13 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_2
+    G_4 -> H_1
+    G_5 -> H_3
+    G_6 -> H_6
+
+Mapping 14 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_2
+    G_3 -> H_5
+    G_4 -> H_1
+    G_5 -> H_3
+    G_6 -> H_6
+
+Mapping 15 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_1
+    G_4 -> H_3
+    G_5 -> H_6
+    G_6 -> H_8
+
+Mapping 16 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_6
+    G_3 -> H_8
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 17 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_6
+    G_4 -> H_1
+    G_5 -> H_5
+    G_6 -> H_2
+
+Mapping 18 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_1
+    G_4 -> H_6
+    G_5 -> H_3
+    G_6 -> H_8
+
+Mapping 19 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_5
+    G_3 -> H_3
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_2
+
+Mapping 20 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_2
+    G_4 -> H_1
+    G_5 -> H_6
+    G_6 -> H_3
+
+Mapping 21 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_1
+    G_5 -> H_5
+    G_6 -> H_2
+
+Mapping 22 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_5
+    G_3 -> H_8
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_2
+
+Mapping 23 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_1
+    G_5 -> H_3
+    G_6 -> H_2
+
+Mapping 24 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_2
+    G_4 -> H_1
+    G_5 -> H_6
+    G_6 -> H_5
+
+Mapping 25 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_8
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 26 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_1
+    G_4 -> H_6
+    G_5 -> H_5
+    G_6 -> H_2
+
+Mapping 27 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_1
+    G_4 -> H_6
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 28 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_2
+    G_4 -> H_6
+    G_5 -> H_5
+    G_6 -> H_8
+
+Mapping 29 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_6
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 30 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_6
+    G_5 -> H_2
+    G_6 -> H_5
+
+Mapping 31 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_5
+    G_4 -> H_6
+    G_5 -> H_3
+    G_6 -> H_4
+
+Mapping 32 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_6
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 33 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_8
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_2
+
+Mapping 34 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_7
+    G_4 -> H_8
+    G_5 -> H_1
+    G_6 -> H_4
+
+Mapping 35 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_2
+    G_3 -> H_1
+    G_4 -> H_6
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 36 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 37 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_1
+    G_5 -> H_2
+    G_6 -> H_5
+
+Mapping 38 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_2
+    G_3 -> H_5
+    G_4 -> H_1
+    G_5 -> H_3
+    G_6 -> H_4
+
+Mapping 39 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_2
+    G_3 -> H_6
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 40 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_2
+    G_4 -> H_1
+    G_5 -> H_5
+    G_6 -> H_4
+
+Mapping 41 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_7
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_5
+
+Mapping 42 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_1
+    G_4 -> H_6
+    G_5 -> H_3
+    G_6 -> H_7
+
+Mapping 43 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_4
+    G_3 -> H_2
+    G_4 -> H_1
+    G_5 -> H_3
+    G_6 -> H_5
+
+Mapping 44 (G -> H):
+    G_1 -> H_6
+    G_2 -> H_3
+    G_3 -> H_5
+    G_4 -> H_1
+    G_5 -> H_4
+    G_6 -> H_2
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4   5   6   7   8
-   1   0   1   0   1   0   0   0   0
-   2   0   0   1   0   1   0   0   0
-   3   1   0   0   1   0   1   0   0
-   4   0   1   0   0   1   0   1   0
-   5   0   0   1   0   0   1   0   1
-   6   1   0   0   1   0   0   1   0
-   7   0   0   0   0   0   0   0   1
-   8   1   0   0   0   0   0   0   0
+   1   0   1   1   1   1   1   0   0
+   2   1   0   1   0   1   1   0   0
+   3   1   1   0   1   1   1   1   1
+   4   1   1   0   0   1   1   1   0
+   5   1   1   1   1   0   1   0   1
+   6   1   1   1   1   1   0   1   1
+   7   1   0   0   1   0   0   0   1
+   8   1   0   0   1   0   0   0   0
 
 
 ----------------------------------------
@@ -1038,14 +1938,25 @@ Graph name='H' n=5
    5   1   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 1, edges added = 1
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 2, edges added = 2
+Mapping 4: deficit = 0, edges added = 0
+Mapping 5: deficit = 2, edges added = 2
+Mapping 6: deficit = 0, edges added = 0
+Mapping 7: deficit = 0, edges added = 0
+Mapping 8: deficit = 0, edges added = 0
+Mapping 9: deficit = 2, edges added = 2
+Mapping 10: deficit = 0, edges added = 0
+Mapping 11: deficit = 1, edges added = 1
+Mapping 12: deficit = 0, edges added = 0
+Mapping 13: deficit = 1, edges added = 1
+Could only find 13 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 3
-Mappings found: 3
+Total edges added: 9
+Mappings found: 13
 
 Mapping 1 (G -> H):
     G_1 -> H_2
@@ -1065,16 +1976,76 @@ Mapping 3 (G -> H):
     G_3 -> H_4
     G_4 -> H_1
 
+Mapping 4 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_2
+    G_4 -> H_4
+
+Mapping 5 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_1
+    G_3 -> H_3
+    G_4 -> H_4
+
+Mapping 6 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_4
+    G_3 -> H_1
+    G_4 -> H_3
+
+Mapping 7 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_2
+    G_4 -> H_1
+
+Mapping 8 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_3
+
+Mapping 9 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_2
+    G_3 -> H_1
+    G_4 -> H_4
+
+Mapping 10 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_1
+    G_3 -> H_2
+    G_4 -> H_4
+
+Mapping 11 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_4
+    G_3 -> H_2
+    G_4 -> H_3
+
+Mapping 12 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_2
+    G_3 -> H_1
+    G_4 -> H_3
+
+Mapping 13 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_2
+    G_3 -> H_1
+    G_4 -> H_4
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4   5
-   1   0   1   1   0   0
-   2   0   0   1   1   0
-   3   0   1   0   1   0
-   4   1   0   0   0   1
-   5   1   0   0   0   0
+   1   0   1   1   1   0
+   2   1   0   1   1   0
+   3   1   1   0   1   0
+   4   1   1   1   0   1
+   5   1   1   0   0   0
 
 
 ----------------------------------------
@@ -1095,14 +2066,16 @@ Graph name='H' n=4
    4   0   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 0, edges added = 0
+Could only find 4 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
 Total edges added: 0
-Mappings found: 3
+Mappings found: 4
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -1118,6 +2091,11 @@ Mapping 3 (G -> H):
     G_1 -> H_3
     G_2 -> H_2
     G_3 -> H_1
+
+Mapping 4 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_2
+    G_3 -> H_3
 
 Edges added to H:
     None. G is already embeddable in H.
@@ -1152,14 +2130,23 @@ Graph name='H' n=6
    6   0   0   0   1   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 8, edges added = 8
 Mapping 2: deficit = 7, edges added = 7
 Mapping 3: deficit = 6, edges added = 6
+Mapping 4: deficit = 7, edges added = 7
+Mapping 5: deficit = 7, edges added = 7
+Mapping 6: deficit = 2, edges added = 2
+Mapping 7: deficit = 6, edges added = 6
+Mapping 8: deficit = 2, edges added = 2
+Mapping 9: deficit = 4, edges added = 4
+Mapping 10: deficit = 0, edges added = 0
+Mapping 11: deficit = 0, edges added = 0
+Could only find 11 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 21
-Mappings found: 3
+Total edges added: 49
+Mappings found: 11
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -1182,16 +2169,72 @@ Mapping 3 (G -> H):
     G_4 -> H_5
     G_5 -> H_2
 
+Mapping 4 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_4
+    G_4 -> H_5
+    G_5 -> H_2
+
+Mapping 5 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_4
+    G_4 -> H_3
+    G_5 -> H_2
+
+Mapping 6 (G -> H):
+    G_1 -> H_5
+    G_2 -> H_1
+    G_3 -> H_4
+    G_4 -> H_3
+    G_5 -> H_2
+
+Mapping 7 (G -> H):
+    G_1 -> H_2
+    G_2 -> H_6
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_5
+
+Mapping 8 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_5
+    G_4 -> H_6
+    G_5 -> H_4
+
+Mapping 9 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_6
+    G_3 -> H_4
+    G_4 -> H_2
+    G_5 -> H_5
+
+Mapping 10 (G -> H):
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_5
+    G_4 -> H_6
+    G_5 -> H_2
+
+Mapping 11 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_3
+    G_3 -> H_5
+    G_4 -> H_6
+    G_5 -> H_2
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4   5   6
-   1   0   2   0   0   0   0
-   2   0   0   4   0   3   0
-   3   0   0   0   4   3   0
-   4   0   4   0   0   3   0
-   5   0   0   0   0   0   1
+   1   0   2   0   1   2   0
+   2   4   0   4   0   4   2
+   3   2   0   0   4   3   2
+   4   0   4   3   0   3   2
+   5   2   2   0   2   0   4
    6   0   0   2   2   0   0
 
 
@@ -1211,10 +2254,11 @@ Graph name='H' n=3
    3   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 0, edges added = 0
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 1, edges added = 1
+Could only find 3 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
 Total edges added: 1
@@ -1260,14 +2304,17 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding minimal extension for 3 isomorphism(s) [HEURISTIC] ===
+=== Finding minimal extension for 100 isomorphism(s) [HEURISTIC] ===
 Mapping 1: deficit = 1, edges added = 1
 Mapping 2: deficit = 0, edges added = 0
 Mapping 3: deficit = 0, edges added = 0
+Mapping 4: deficit = 1, edges added = 1
+Mapping 5: deficit = 0, edges added = 0
+Could only find 5 distinct mappings (requested 100).
 
 --- Minimal Extension Result ---
-Total edges added: 1
-Mappings found: 3
+Total edges added: 2
+Mappings found: 5
 
 Mapping 1 (G -> H):
     G_1 -> H_1
@@ -1284,12 +2331,22 @@ Mapping 3 (G -> H):
     G_2 -> H_1
     G_3 -> H_2
 
+Mapping 4 (G -> H):
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_3
+
+Mapping 5 (G -> H):
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+
 Edges added to H:
     (See extended adjacency matrix)
 
 Extended H' adjacency matrix:
        1   2   3   4
-   1   0   1   0   0
+   1   0   1   1   0
    2   0   0   1   0
    3   1   0   0   1
    4   1   0   0   0

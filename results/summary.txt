@@ -1,10 +1,10 @@
 ==========================================
 Test Run Summary
 ==========================================
-Date: Fri Nov 28 11:47:51 CET 2025
+Date: Fri Nov 28 12:57:26 CET 2025
 Executable: ./build/aac
 Data directory: ./data
-N value: 3
+N value: 100
 
 Algorithms tested:
   - iso_exact

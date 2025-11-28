@@ -1,8 +1,8 @@
 ==========================================
 Results for Algorithm: iso_approx
 ==========================================
-Date: Fri Nov 28 11:47:50 CET 2025
-N value: 3
+Date: Fri Nov 28 12:57:24 CET 2025
+N value: 100
 Total data files: 23
 ==========================================
 
@@ -24,7 +24,7 @@ Graph name='H' n=3
    3   1   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -64,7 +64,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -90,7 +90,7 @@ Graph name='H' n=5
    5   1   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -117,7 +117,7 @@ Graph name='H' n=3
    3   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -149,7 +149,7 @@ Graph name='H' n=3
    3   0   0   1
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -182,7 +182,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -207,7 +207,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -238,7 +238,7 @@ Graph name='H' n=3
    3   1   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 G has more vertices than H. No isomorphism possible.
 
 --- Isomorphism Result ---
@@ -266,11 +266,11 @@ Graph name='H' n=5
    5   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 7
 
 Mapping 1:
     G_1 -> H_1
@@ -288,6 +288,30 @@ Mapping 3:
     G_1 -> H_1
     G_2 -> H_4
     G_3 -> H_2
+    G_4 -> H_3
+
+Mapping 4:
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_2
+    G_4 -> H_3
+
+Mapping 5:
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_3
+    G_4 -> H_2
+
+Mapping 6:
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_4
+    G_4 -> H_2
+
+Mapping 7:
+    G_1 -> H_1
+    G_2 -> H_5
+    G_3 -> H_4
     G_4 -> H_3
 
 
@@ -310,7 +334,7 @@ Graph name='H' n=4
    4   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -346,7 +370,7 @@ Graph name='H' n=7
    7   1   0   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -375,7 +399,7 @@ Graph name='H' n=6
    6   1   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -403,7 +427,7 @@ Graph name='H' n=6
    6   0   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -449,7 +473,7 @@ Graph name='H' n=6
    6   1   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -474,7 +498,7 @@ Graph name='H' n=4
    4   2   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 Product graph is empty. No isomorphism possible.
 
 --- Isomorphism Result ---
@@ -502,11 +526,11 @@ Graph name='H' n=5
    5   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 4
 
 Mapping 1:
     G_1 -> H_1
@@ -525,6 +549,12 @@ Mapping 3:
     G_2 -> H_5
     G_3 -> H_2
     G_4 -> H_3
+
+Mapping 4:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_5
 
 
 ----------------------------------------
@@ -549,7 +579,7 @@ Graph name='H' n=6
    6   0   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -595,7 +625,7 @@ Graph name='H' n=8
    8   1   0   0   0   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -622,7 +652,7 @@ Graph name='H' n=5
    5   1   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -647,11 +677,11 @@ Graph name='H' n=4
    4   0   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
+Number of isomorphisms found: 7
 
 Mapping 1:
     G_1 -> H_1
@@ -666,6 +696,26 @@ Mapping 2:
 Mapping 3:
     G_1 -> H_3
     G_2 -> H_1
+    G_3 -> H_2
+
+Mapping 4:
+    G_1 -> H_4
+    G_2 -> H_1
+    G_3 -> H_2
+
+Mapping 5:
+    G_1 -> H_4
+    G_2 -> H_2
+    G_3 -> H_1
+
+Mapping 6:
+    G_1 -> H_4
+    G_2 -> H_3
+    G_3 -> H_1
+
+Mapping 7:
+    G_1 -> H_4
+    G_2 -> H_3
     G_3 -> H_2
 
 
@@ -691,7 +741,7 @@ Graph name='H' n=6
    6   0   0   0   1   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO
@@ -714,7 +764,7 @@ Graph name='H' n=3
    3   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: YES
@@ -747,7 +797,7 @@ Graph name='H' n=4
    4   1   0   0   0
 
 
-=== Finding 3 isomorphism(s) [HEURISTIC] ===
+=== Finding 100 isomorphism(s) [HEURISTIC] ===
 
 --- Isomorphism Result ---
 Subgraph isomorphism exists: NO

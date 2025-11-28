@@ -9,7 +9,7 @@
 EXECUTABLE="./build/aac"
 DATA_DIR="./data"
 RESULTS_DIR="./results"
-N_VALUE=3  # Number of isomorphisms/extensions to find
+N_VALUE=100  # Number of isomorphisms/extensions to find
 
 # Algorithms to test
 ALGORITHMS=("iso_exact" "iso_approx" "ext_exact" "ext_approx")
