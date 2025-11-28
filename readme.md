@@ -67,6 +67,31 @@ Find minimal edges to add to H so that G can be embedded `n` times:
 ./aac ext_approx ../data/graph.txt 2
 ```
 
+## Running All Tests
+
+To run all algorithms on all data sets automatically, use the provided script:
+
+```bash
+# From the project root directory
+./run_all_tests.sh
+```
+
+This script will:
+- Run all 4 algorithms (`iso_exact`, `iso_approx`, `ext_exact`, `ext_approx`) on all data files
+- Create a `results/` directory automatically
+- Generate separate result files for each algorithm type:
+  - `results/iso_exact_results.txt`
+  - `results/iso_approx_results.txt`
+  - `results/ext_exact_results.txt`
+  - `results/ext_approx_results.txt`
+- Create a `results/summary.txt` file with an overview of all tests
+
+
+To regenerate all results, simply run:
+```bash
+./run_all_tests.sh
+```
+
 ## Examples
 
 ```bash

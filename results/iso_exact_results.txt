@@ -1,0 +1,794 @@
+==========================================
+Results for Algorithm: iso_exact
+==========================================
+Date: Fri Nov 28 11:47:50 CET 2025
+N value: 3
+Total data files: 23
+==========================================
+
+
+----------------------------------------
+Data File: 01_identical_triangles (01_identical_triangles.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 3 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   1   0   0
+
+Graph name='H' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   1   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+
+Mapping 2:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_1
+
+Mapping 3:
+    G_1 -> H_3
+    G_2 -> H_1
+    G_3 -> H_2
+
+
+----------------------------------------
+Data File: 02_triangle_in_square (02_triangle_in_square.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 4 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   1   0   0
+
+Graph name='H' n=4
+       1   2   3   4
+   1   0   1   0   0
+   2   0   0   1   0
+   3   0   0   0   1
+   4   1   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 03_perfect_subgraph (03_perfect_subgraph.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 5 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   0   0   0
+
+Graph name='H' n=5
+       1   2   3   4   5
+   1   0   1   1   0   0
+   2   0   0   1   0   0
+   3   0   0   0   1   0
+   4   0   0   0   0   1
+   5   1   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+
+Mapping 2:
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+
+Mapping 3:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_4
+
+
+----------------------------------------
+Data File: 04_single_vertex (04_single_vertex.txt)
+----------------------------------------
+Loaded G: 1 vertices, H: 3 vertices
+Graph name='G' n=1
+       1
+   1   0
+
+Graph name='H' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+
+Mapping 2:
+    G_1 -> H_2
+
+Mapping 3:
+    G_1 -> H_3
+
+
+----------------------------------------
+Data File: 05_self_loops (05_self_loops.txt)
+----------------------------------------
+Loaded G: 2 vertices, H: 3 vertices
+Graph name='G' n=2
+       1   2
+   1   1   1
+   2   0   1
+
+Graph name='H' n=3
+       1   2   3
+   1   1   1   0
+   2   0   1   1
+   3   0   0   1
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 2
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+
+Mapping 2:
+    G_1 -> H_2
+    G_2 -> H_3
+
+
+----------------------------------------
+Data File: 06_multigraph (06_multigraph.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 4 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   3   0
+   2   0   0   1
+   3   2   0   0
+
+Graph name='H' n=4
+       1   2   3   4
+   1   0   2   0   0
+   2   0   0   1   0
+   3   0   0   0   1
+   4   1   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 07_directed_asymmetric (07_directed_asymmetric.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 4 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   0   1   0
+
+Graph name='H' n=4
+       1   2   3   4
+   1   0   1   0   0
+   2   0   0   1   0
+   3   0   1   0   1
+   4   1   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 1
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+
+
+----------------------------------------
+Data File: 08_no_isomorphism_possible (08_no_isomorphism_possible.txt)
+----------------------------------------
+Loaded G: 5 vertices, H: 3 vertices
+Graph name='G' n=5
+       1   2   3   4   5
+   1   0   1   0   0   0
+   2   0   0   1   0   0
+   3   0   0   0   1   0
+   4   0   0   0   0   1
+   5   1   0   0   0   0
+
+Graph name='H' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   1   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+G has more vertices than H. No isomorphism possible.
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 09_star_graph (09_star_graph.txt)
+----------------------------------------
+Loaded G: 4 vertices, H: 5 vertices
+Graph name='G' n=4
+       1   2   3   4
+   1   0   1   1   1
+   2   0   0   0   0
+   3   0   0   0   0
+   4   0   0   0   0
+
+Graph name='H' n=5
+       1   2   3   4   5
+   1   0   1   1   1   1
+   2   0   0   0   0   0
+   3   0   0   0   0   0
+   4   0   0   0   0   0
+   5   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_4
+
+Mapping 2:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_5
+
+Mapping 3:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_4
+    G_4 -> H_5
+
+
+----------------------------------------
+Data File: 10_complete_k4 (10_complete_k4.txt)
+----------------------------------------
+Loaded G: 4 vertices, H: 4 vertices
+Graph name='G' n=4
+       1   2   3   4
+   1   0   1   1   1
+   2   0   0   1   1
+   3   0   0   0   1
+   4   0   0   0   0
+
+Graph name='H' n=4
+       1   2   3   4
+   1   0   1   1   1
+   2   0   0   1   1
+   3   0   0   0   1
+   4   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 1
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_4
+
+
+----------------------------------------
+Data File: 11_medium_sparse (11_medium_sparse.txt)
+----------------------------------------
+Loaded G: 5 vertices, H: 7 vertices
+Graph name='G' n=5
+       1   2   3   4   5
+   1   0   1   0   0   0
+   2   0   0   1   1   0
+   3   0   0   0   1   0
+   4   0   0   0   0   1
+   5   1   0   0   0   0
+
+Graph name='H' n=7
+       1   2   3   4   5   6   7
+   1   0   1   0   0   0   0   0
+   2   0   0   1   0   1   0   0
+   3   0   0   0   1   0   1   0
+   4   0   0   0   0   1   0   0
+   5   0   0   0   0   0   1   0
+   6   0   0   0   0   0   0   1
+   7   1   0   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 12_medium_dense (12_medium_dense.txt)
+----------------------------------------
+Loaded G: 5 vertices, H: 6 vertices
+Graph name='G' n=5
+       1   2   3   4   5
+   1   0   1   1   1   1
+   2   0   0   1   1   0
+   3   0   0   0   1   0
+   4   0   0   0   0   1
+   5   0   0   0   0   0
+
+Graph name='H' n=6
+       1   2   3   4   5   6
+   1   0   1   1   0   0   0
+   2   0   0   1   1   0   0
+   3   0   0   0   1   1   0
+   4   0   0   0   0   1   1
+   5   0   0   0   0   0   1
+   6   1   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 13_bipartite (13_bipartite.txt)
+----------------------------------------
+Loaded G: 4 vertices, H: 6 vertices
+Graph name='G' n=4
+       1   2   3   4
+   1   0   0   1   1
+   2   0   0   1   1
+   3   0   0   0   0
+   4   0   0   0   0
+
+Graph name='H' n=6
+       1   2   3   4   5   6
+   1   0   0   0   1   1   1
+   2   0   0   0   1   1   0
+   3   0   0   0   0   0   1
+   4   0   0   0   0   0   0
+   5   0   0   0   0   0   0
+   6   0   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_4
+    G_4 -> H_5
+
+Mapping 2:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_5
+    G_4 -> H_4
+
+Mapping 3:
+    G_1 -> H_2
+    G_2 -> H_1
+    G_3 -> H_4
+    G_4 -> H_5
+
+
+----------------------------------------
+Data File: 14_path_in_cycle (14_path_in_cycle.txt)
+----------------------------------------
+Loaded G: 4 vertices, H: 6 vertices
+Graph name='G' n=4
+       1   2   3   4
+   1   0   1   0   0
+   2   0   0   1   0
+   3   0   0   0   1
+   4   0   0   0   0
+
+Graph name='H' n=6
+       1   2   3   4   5   6
+   1   0   1   0   0   0   0
+   2   0   0   1   0   0   0
+   3   0   0   0   1   0   0
+   4   0   0   0   0   1   0
+   5   0   0   0   0   0   1
+   6   1   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_4
+
+Mapping 2:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_5
+
+Mapping 3:
+    G_1 -> H_3
+    G_2 -> H_4
+    G_3 -> H_5
+    G_4 -> H_6
+
+
+----------------------------------------
+Data File: 15_heavy_multigraph (15_heavy_multigraph.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 4 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   5   0
+   2   0   0   3
+   3   1   0   0
+
+Graph name='H' n=4
+       1   2   3   4
+   1   0   2   0   0
+   2   0   0   1   0
+   3   0   0   0   1
+   4   2   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+Product graph is empty. No isomorphism possible.
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 16_two_components_g (16_two_components_g.txt)
+----------------------------------------
+Loaded G: 4 vertices, H: 5 vertices
+Graph name='G' n=4
+       1   2   3   4
+   1   0   1   0   0
+   2   0   0   0   0
+   3   0   0   0   1
+   4   0   0   0   0
+
+Graph name='H' n=5
+       1   2   3   4   5
+   1   0   1   0   0   0
+   2   0   0   1   0   0
+   3   0   0   0   0   0
+   4   0   0   0   0   1
+   5   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_4
+    G_4 -> H_5
+
+Mapping 2:
+    G_1 -> H_2
+    G_2 -> H_3
+    G_3 -> H_4
+    G_4 -> H_5
+
+Mapping 3:
+    G_1 -> H_4
+    G_2 -> H_5
+    G_3 -> H_1
+    G_4 -> H_2
+
+
+----------------------------------------
+Data File: 17_clique_k5_into_k6 (17_clique_k5_into_k6.txt)
+----------------------------------------
+Loaded G: 5 vertices, H: 6 vertices
+Graph name='G' n=5
+       1   2   3   4   5
+   1   0   1   1   1   1
+   2   0   0   1   1   1
+   3   0   0   0   1   1
+   4   0   0   0   0   1
+   5   0   0   0   0   0
+
+Graph name='H' n=6
+       1   2   3   4   5   6
+   1   0   1   1   1   1   1
+   2   0   0   1   1   1   1
+   3   0   0   0   1   1   1
+   4   0   0   0   0   1   1
+   5   0   0   0   0   0   1
+   6   0   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_5
+
+Mapping 2:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_4
+    G_5 -> H_6
+
+Mapping 3:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+    G_4 -> H_5
+    G_5 -> H_6
+
+
+----------------------------------------
+Data File: 18_larger_test (18_larger_test.txt)
+----------------------------------------
+Loaded G: 6 vertices, H: 8 vertices
+Graph name='G' n=6
+       1   2   3   4   5   6
+   1   0   1   1   0   0   0
+   2   0   0   1   1   0   0
+   3   0   0   0   1   1   0
+   4   0   0   0   0   1   1
+   5   0   0   0   0   0   1
+   6   1   0   0   0   0   0
+
+Graph name='H' n=8
+       1   2   3   4   5   6   7   8
+   1   0   1   0   1   0   0   0   0
+   2   0   0   1   0   1   0   0   0
+   3   0   0   0   1   0   1   0   0
+   4   0   0   0   0   1   0   1   0
+   5   0   0   0   0   0   1   0   1
+   6   0   0   0   0   0   0   1   0
+   7   0   0   0   0   0   0   0   1
+   8   1   0   0   0   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 19_worst_case_greedy (19_worst_case_greedy.txt)
+----------------------------------------
+Loaded G: 4 vertices, H: 5 vertices
+Graph name='G' n=4
+       1   2   3   4
+   1   0   1   1   0
+   2   0   0   1   0
+   3   0   0   0   1
+   4   1   0   0   0
+
+Graph name='H' n=5
+       1   2   3   4   5
+   1   0   1   0   0   0
+   2   0   0   1   1   0
+   3   0   0   0   1   0
+   4   0   0   0   0   1
+   5   1   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: 20_empty_g (20_empty_g.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 4 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   0   0
+   2   0   0   0
+   3   0   0   0
+
+Graph name='H' n=4
+       1   2   3   4
+   1   0   1   0   0
+   2   0   0   1   0
+   3   0   0   0   1
+   4   0   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 3
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_3
+
+Mapping 2:
+    G_1 -> H_1
+    G_2 -> H_2
+    G_3 -> H_4
+
+Mapping 3:
+    G_1 -> H_1
+    G_2 -> H_3
+    G_3 -> H_4
+
+
+----------------------------------------
+Data File: compy (compy.txt)
+----------------------------------------
+Loaded G: 5 vertices, H: 6 vertices
+Graph name='G' n=5
+       1   2   3   4   5
+   1   0   2   0   0   0
+   2   0   0   1   0   0
+   3   0   0   0   3   1
+   4   0   0   0   0   0
+   5   0   4   0   2   0
+
+Graph name='H' n=6
+       1   2   3   4   5   6
+   1   0   1   0   0   0   0
+   2   0   0   1   0   0   0
+   3   0   0   0   1   0   0
+   4   0   1   0   0   1   0
+   5   0   0   0   0   0   1
+   6   0   0   0   1   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+----------------------------------------
+Data File: graphs (graphs.txt)
+----------------------------------------
+Loaded G: 2 vertices, H: 3 vertices
+Graph name='G' n=2
+       1   2
+   1   0   1
+   2   0   0
+
+Graph name='H' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: YES
+Number of isomorphisms found: 2
+
+Mapping 1:
+    G_1 -> H_1
+    G_2 -> H_2
+
+Mapping 2:
+    G_1 -> H_2
+    G_2 -> H_3
+
+
+----------------------------------------
+Data File: triangle-square (triangle-square.txt)
+----------------------------------------
+Loaded G: 3 vertices, H: 4 vertices
+Graph name='G' n=3
+       1   2   3
+   1   0   1   0
+   2   0   0   1
+   3   1   0   0
+
+Graph name='H' n=4
+       1   2   3   4
+   1   0   1   0   0
+   2   0   0   1   0
+   3   0   0   0   1
+   4   1   0   0   0
+
+
+=== Finding 3 isomorphism(s) [EXACT] ===
+
+--- Isomorphism Result ---
+Subgraph isomorphism exists: NO
+Number of isomorphisms found: 0
+
+
+==========================================
+End of results for: iso_exact
+==========================================

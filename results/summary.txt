@@ -1,0 +1,46 @@
+==========================================
+Test Run Summary
+==========================================
+Date: Fri Nov 28 11:47:51 CET 2025
+Executable: ./build/aac
+Data directory: ./data
+N value: 3
+
+Algorithms tested:
+  - iso_exact
+  - iso_approx
+  - ext_exact
+  - ext_approx
+
+Data files tested: 23
+  - 01_identical_triangles.txt
+  - 02_triangle_in_square.txt
+  - 03_perfect_subgraph.txt
+  - 04_single_vertex.txt
+  - 05_self_loops.txt
+  - 06_multigraph.txt
+  - 07_directed_asymmetric.txt
+  - 08_no_isomorphism_possible.txt
+  - 09_star_graph.txt
+  - 10_complete_k4.txt
+  - 11_medium_sparse.txt
+  - 12_medium_dense.txt
+  - 13_bipartite.txt
+  - 14_path_in_cycle.txt
+  - 15_heavy_multigraph.txt
+  - 16_two_components_g.txt
+  - 17_clique_k5_into_k6.txt
+  - 18_larger_test.txt
+  - 19_worst_case_greedy.txt
+  - 20_empty_g.txt
+  - compy.txt
+  - graphs.txt
+  - triangle-square.txt
+
+Results organized by algorithm:
+  - ./results/iso_exact_results.txt
+  - ./results/iso_approx_results.txt
+  - ./results/ext_exact_results.txt
+  - ./results/ext_approx_results.txt
+
+==========================================
