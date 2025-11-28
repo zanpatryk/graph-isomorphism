@@ -49,10 +49,10 @@ Find up to `n` distinct subgraph isomorphisms from G to H:
 
 ```bash
 # Exact algorithm (Bron-Kerbosch on product graph)
-./aac iso_exact data/graph.txt 3
+./aac iso_exact ../data/graph.txt 3
 
 # Heuristic algorithm (greedy clique)
-./aac iso_approx data/graph.txt 3
+./aac iso_approx ../data/graph.txt 3
 ```
 
 ### Finding Minimal Extensions
@@ -61,23 +61,23 @@ Find minimal edges to add to H so that G can be embedded `n` times:
 
 ```bash
 # Exact algorithm (backtracking, iterative for n>1)
-./aac ext_exact data/graph.txt 2
+./aac ext_exact ../data/graph.txt 2
 
 # Heuristic algorithm (greedy matching, iterative)
-./aac ext_approx data/graph.txt 2
+./aac ext_approx ../data/graph.txt 2
 ```
 
 ## Examples
 
 ```bash
 # Find if triangle is subgraph of square (with diagonal needed)
-./aac iso_exact data/triangle-square.txt 1
+./aac iso_exact ../data/triangle-square.txt 1
 
 # Find 3 ways to embed triangle into itself
-./aac iso_exact data/identical_triangles.txt 3
+./aac iso_exact ../data/identical_triangles.txt 3
 
 # Find minimal extension for 2 embeddings
-./aac ext_approx data/compy.txt 2
+./aac ext_approx ../data/compy.txt 2
 ```
 
 ## Output
