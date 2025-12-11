@@ -1,0 +1,207 @@
+01_identical_triangles.txt
+--------------------------
+Description: Two identical triangle graphs
+g: 3 vertices forming a cycle (triangle)
+h: 3 vertices forming a cycle (triangle)
+Expected: YES - Perfect isomorphism (g ≅ h)
+Complexity: Trivial
+Notes: Simplest positive case
+
+02_triangle_in_square.txt
+-------------------------
+Description: Triangle embedded in a square cycle
+g: 3 vertices forming a triangle cycle
+h: 4 vertices forming a square cycle
+Expected: YES - Triangle is subgraph of square
+Complexity: Simple
+Notes: Basic subgraph isomorphism case
+
+03_perfect_subgraph.txt
+-----------------------
+Description: Path as subgraph of larger graph
+g: 3 vertices forming a directed path
+h: 5 vertices with more complex structure
+Expected: YES - Path exists in h
+Complexity: Simple
+Notes: Tests path finding in larger graph
+
+04_single_vertex.txt
+--------------------
+Description: Single vertex in path graph
+g: 1 vertex (isolated)
+h: 3 vertices forming a path
+Expected: YES - Single vertex trivially exists
+Complexity: Trivial
+Notes: Edge case with minimal g
+
+05_self_loops.txt
+-----------------
+Description: Graphs with self-loops
+g: 2 vertices with self-loops
+h: 3 vertices with self-loops
+Expected: Depends on self-loop handling
+Complexity: Medium
+Notes: Tests handling of self-loops in matching
+
+06_multigraph.txt
+-----------------
+Description: Multigraphs with multiple edges
+g: 3 vertices with multiple edges between pairs
+h: 4 vertices with multiple edges
+Expected: YES if multigraph edges are matched correctly
+Complexity: Medium
+Notes: Tests edge multiplicity matching
+
+07_directed_asymmetric.txt
+--------------------------
+Description: Directed graphs with asymmetric edges
+g: 3 vertices with directed edges
+h: 4 vertices with directed edges
+Expected: YES/NO depending on direction matching
+Complexity: Medium
+Notes: Tests proper handling of edge directions
+
+08_no_isomorphism_possible.txt
+------------------------------
+Description: Incompatible graph structures
+g: 5 vertices forming a cycle
+h: 3 vertices forming a triangle
+Expected: NO - g is larger than h
+Complexity: Trivial
+Notes: Negative case - g cannot fit in smaller h
+
+09_star_graph.txt
+-----------------
+Description: Star graph topology
+g: 4 vertices in star formation (1 center, 3 leaves)
+h: 5 vertices in star formation (1 center, 4 leaves)
+Expected: YES - Smaller star in larger star
+Complexity: Simple
+Notes: Tests star graph pattern matching
+
+10_complete_k4.txt
+------------------
+Description: Complete graphs K4
+g: 4 vertices, complete graph (all connected)
+h: 4 vertices, complete graph (all connected)
+Expected: YES - Identical complete graphs
+Complexity: Medium
+Notes: High connectivity case
+
+11_medium_sparse.txt
+--------------------
+Description: Medium-sized sparse graphs
+g: 5 vertices with sparse connectivity
+h: 7 vertices with sparse connectivity
+Expected: YES/NO depending on structure
+Complexity: Medium
+Notes: Tests performance on medium sparse graphs
+
+12_medium_dense.txt
+-------------------
+Description: Medium-sized dense graphs
+g: 5 vertices with many edges
+h: 6 vertices with many edges
+Expected: YES/NO depending on structure
+Complexity: Medium-High
+Notes: Higher edge density increases search space
+
+13_bipartite.txt
+----------------
+Description: Bipartite graph structure
+g: 4 vertices in bipartite arrangement
+h: 6 vertices with bipartite structure
+Expected: YES if bipartite matching exists
+Complexity: Medium
+Notes: Tests bipartite graph matching
+
+14_path_in_cycle.txt
+--------------------
+Description: Path embedded in cycle
+g: 4 vertices forming a path
+h: 6 vertices forming a cycle
+Expected: YES - Path exists in cycle
+Complexity: Simple
+Notes: Common graph pattern
+
+15_heavy_multigraph.txt
+-----------------------
+Description: Multigraph with high edge multiplicities
+g: 3 vertices with edges of multiplicity 5, 3, 1
+h: 4 vertices with lower multiplicities
+Expected: Depends on multiplicity matching rules
+Complexity: Medium
+Notes: Stress test for edge multiplicity handling
+
+16_two_components_g.txt
+-----------------------
+Description: Disconnected graph g
+g: 4 vertices in two separate components
+h: 5 vertices with multiple components
+Expected: YES if both components can be mapped
+Complexity: Medium-High
+Notes: Tests handling of disconnected graphs
+
+17_clique_k5_into_k6.txt
+------------------------
+Description: Complete graph K5 into K6
+g: 5 vertices, complete graph K5
+h: 6 vertices, complete graph K6
+Expected: YES - K5 is subgraph of K6
+Complexity: High
+Notes: Dense complete graph matching
+
+18_larger_test.txt
+------------------
+Description: Larger cycle graphs
+g: 6 vertices forming a cycle
+h: 8 vertices forming a cycle
+Expected: YES - Smaller cycle in larger cycle
+Complexity: Medium
+Notes: Tests scalability with larger inputs
+
+19_worst_case_greedy.txt
+------------------------
+Description: Adversarial case for greedy algorithms
+g: 4 vertices in specific arrangement
+h: 5 vertices designed to mislead greedy search
+Expected: YES but requires backtracking
+Complexity: High
+Notes: Tests algorithm robustness, may cause greedy to fail
+
+20_empty_g.txt
+--------------
+Description: Empty graph g (no edges)
+g: 3 vertices, no edges (independent set)
+h: 4 vertices forming a path
+Expected: YES - Empty graph always embeddable
+Complexity: Trivial
+Notes: Edge case with no edges in g
+
+===============================================================================
+SUMMARY STATISTICS
+===============================================================================
+
+Total Examples: 20
+Trivial Cases: 4 (01, 04, 08, 20)
+Simple Cases: 4 (02, 03, 09, 14)
+Medium Cases: 8 (05, 06, 07, 11, 12, 13, 15, 16, 18)
+High Complexity: 4 (10, 17, 19, and dense cases)
+
+Expected YES: ~14-16 (depending on implementation details)
+Expected NO: ~4-6 (depending on implementation details)
+
+Special Features Tested:
+- Self-loops (05)
+- Multigraphs (06, 15)
+- Directed graphs (07)
+- Disconnected graphs (16)
+- Complete graphs (10, 17)
+- Star graphs (09)
+- Bipartite graphs (13)
+- Empty graphs (20)
+- Cycle graphs (01, 02, 08, 14, 18)
+- Path graphs (03, 04, 14, 20)
+
+===============================================================================
+
