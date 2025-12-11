@@ -2,9 +2,11 @@
 
 A framework for comparing directed multigraphs, finding subgraph isomorphisms, and computing minimal extensions.
 
-## Building
+## Cloning & Building
 
 ```bash
+git clone https://github.com/zanpatryk/graph-isomorphism
+cd graph-isomorphism
 mkdir build && cd build
 cmake ..
 make
