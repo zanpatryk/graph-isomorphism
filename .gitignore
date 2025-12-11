@@ -24,3 +24,4 @@ build/
 test/tests_*/
 test/results/
 aac
+/results/
