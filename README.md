@@ -8,7 +8,7 @@ A framework for comparing directed multigraphs, finding subgraph isomorphisms, a
 git clone https://github.com/zanpatryk/graph-isomorphism
 cd graph-isomorphism
 mkdir build && cd build
-cmake .. & cd ..
+cmake .. && cd ..
 make
 ```
 
