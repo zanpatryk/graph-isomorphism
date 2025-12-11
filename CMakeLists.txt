@@ -16,5 +16,6 @@ add_executable(aac main.c
         algorithms/product_graph.h
         algorithms/product_graph.c
         algorithms/isomorphism.h
-        algorithms/isomorphism.c)
+        algorithms/isomorphism.c
+        test/graph_gen.c)
 
