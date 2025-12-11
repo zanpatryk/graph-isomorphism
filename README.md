@@ -90,58 +90,12 @@ cd test
 ./run_tests.sh
 
 # By providing 4 numbers to the run_tests, you can specify the N value for each algorithm:
+# ./run_tests.sh <ISO_EXACT_N> <ISO_APPROX_N> <EXT_EXACT_N> <EXT_APPROX_N>
 # ISO_EXACT - Find 1 subgraph of graph G in graph H
 # ISO_APPROX - Find 4 different subgraphs of graph G in graph H using approximation
-# EXT_EXACT - Find 2 different extensions of graph H H1 and H2 such that G is a subgraph of H1 and H2
-# EXT_APPROX - Find 6 different extensions of graph H H1, H2, ..., H6
-# such that G is a subgraph of H1, H2, ..., H6 using approximation
+# EXT_EXACT - Find a graph H' by adding edges to H,
+# such that H' contains at least 2 different embeddings of G
+# EXT_APPROX - Find a graph H' by adding edges to H,
+# such that H' contains at least 6 different embeddings of G using approximation
 ./run_tests.sh 1 4 2 6
 ```
-
-## Examples
-
-```bash
-# Find if triangle is subgraph of square (with diagonal needed)
-./aac iso_exact data/triangle-square.txt 1
-
-# Find 3 ways to embed triangle into itself
-./aac iso_exact data/identical_triangles.txt 3
-
-# Find minimal extension for 2 embeddings
-./aac ext_approx data/compy.txt 2
-```
-
-## Output
-
-### Isomorphism Output
-```
---- Isomorphism Result ---
-Subgraph isomorphism exists: YES
-Number of isomorphisms found: 3
-
-Mapping 1:
-    G_1 -> H_1
-    G_2 -> H_2
-    G_3 -> H_3
-...
-```
-
-### Extension Output
-```
---- Minimal Extension Result ---
-Total edges added: 2
-Mappings found: 2
-
-Mapping 1 (G -> H):
-    G_1 -> H_1
-    G_2 -> H_2
-
-Mapping 2 (G -> H):
-    G_1 -> H_3
-    G_2 -> H_4
-
-Extended H' adjacency matrix:
-       1   2   3   4
-   1   0   1   0   0
-   2   0   0   1   1
-   ...

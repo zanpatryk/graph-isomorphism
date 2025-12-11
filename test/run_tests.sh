@@ -9,7 +9,10 @@ DIR_APPROX="tests_approx"
 DIR_EXACT_EXT="tests_exact_ext"
 DIR_APPROX_EXT="tests_approx_ext"
 RESULTS_DIR="results"
-N_VALUE=${1:-1}  # Number of solutions to find
+N_VAL_ISO_EXACT=${1:-1}  # Number of solutions to find
+N_VAL_ISO_APPROX=${2:-1}  # Number of solutions to find
+N_VAL_EXT_EXACT=${3:-1}  # Number of solutions to find
+N_VAL_EXT_APPROX=${4:-1}  # Number of solutions to find
 
 # Check if binary exists
 if [ ! -f "$EXECUTABLE" ]; then
@@ -31,7 +34,7 @@ echo "Approx Data:     $DIR_APPROX"
 echo "Exact Ext Data:  $DIR_EXACT_EXT"
 echo "Approx Ext Data: $DIR_APPROX_EXT"
 echo "Results Dir:     $RESULTS_DIR"
-echo "N Value:         $N_VALUE"
+echo "N Values:        $N_VAL_ISO_EXACT, $N_VAL_ISO_APPROX, $N_VAL_EXT_EXACT, $N_VAL_EXT_APPROX"
 echo "Stop on Fail:    YES"
 echo "=========================================="
 echo ""
@@ -42,6 +45,7 @@ echo ""
 run_algo_suite() {
     local algo_name="$1"    # e.g., "iso_exact"
     local input_dir="$2"    # e.g., "tests_exact"
+    local n_val="$3"
 
     # Skip if directory doesn't exist
     if [ ! -d "$input_dir" ]; then
@@ -62,7 +66,7 @@ run_algo_suite() {
     echo "==========================================" >> "$result_file"
     echo "Date: $(date)" >> "$result_file"
     echo "Source Directory: $input_dir" >> "$result_file"
-    echo "N Value: $N_VALUE" >> "$result_file"
+    echo "N Values: $N_VAL_ISO_EXACT, $N_VAL_ISO_APPROX, $N_VAL_EXT_EXACT, $N_VAL_EXT_APPROX" >> "$result_file"
     echo "==========================================" >> "$result_file"
     echo "" >> "$result_file"
 
@@ -89,7 +93,7 @@ run_algo_suite() {
 
         # Run the command
         # Syntax: ./aac <algo> <file> <n>
-        "$EXECUTABLE" "$algo_name" "$file" "$N_VALUE" >> "$result_file" 2>&1
+        "$EXECUTABLE" "$algo_name" "$file" "$n_val" >> "$result_file" 2>&1
 
         # Capture status IMMEDIATELY
         local run_status=$?
@@ -141,10 +145,10 @@ echo ">>> PHASE 1: Subgraph Isomorphism (Finding) <<<"
 echo ""
 
 # 1. Exact Isomorphism
-run_algo_suite "iso_exact" "$DIR_EXACT"
+run_algo_suite "iso_exact" "$DIR_EXACT" "$N_VAL_ISO_EXACT"
 
 # 2. Approx Isomorphism
-run_algo_suite "iso_approx" "$DIR_APPROX"
+run_algo_suite "iso_approx" "$DIR_APPROX" "$N_VAL_ISO_APPROX"
 
 
 # --- PHASE 2: EXTENSION ALGORITHMS ---
@@ -152,10 +156,10 @@ echo ">>> PHASE 2: Minimal Extension <<<"
 echo ""
 
 # 3. Exact Extension
-run_algo_suite "ext_exact" "$DIR_EXACT_EXT"
+run_algo_suite "ext_exact" "$DIR_EXACT_EXT" "$N_VAL_EXT_EXACT"
 
 # 4. Approx Extension
-run_algo_suite "ext_approx" "$DIR_APPROX_EXT"
+run_algo_suite "ext_approx" "$DIR_APPROX_EXT" "$N_VAL_EXT_APPROX"
 
 
 # ==========================================
