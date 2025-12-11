@@ -4,7 +4,7 @@
 # Configuration
 # ==========================================
 EXECUTABLE="../aac"
-DIR_EXACT="tests_approx"
+DIR_EXACT="tests_exact"
 DIR_APPROX="tests_approx"
 DIR_EXACT_EXT="tests_exact_ext"
 DIR_APPROX_EXT="tests_approx_ext"
