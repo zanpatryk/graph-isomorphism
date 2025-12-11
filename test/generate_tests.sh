@@ -9,20 +9,24 @@ DIR_APPROX_EXT="tests_approx_ext" # New directory for Approx Extension
 NUM_CASES=10
 
 ISO_EXACT_G_LOW=4
+ISO_EXACT_G_MAX_DIFF=1
 ISO_EXACT_H_LOW=10
 ISO_EXACT_H_MAX=20
 
 ISO_APPROX_G_LOW=10
+ISO_APPROX_G_MAX_DIFF=1
 ISO_APPROX_H_LOW=30
 ISO_APPROX_H_MAX=40
 
-EXT_EXACT_G_LOW=3
-EXT_EXACT_H_LOW=9
+EXT_EXACT_G_LOW=5
+EXT_EXACT_G_MAX_DIFF=2
+EXT_EXACT_H_LOW=7
 EXT_EXACT_H_MAX=11
 
-EXT_APPROX_G_LOW=5
-EXT_APPROX_H_LOW=10
-EXT_APPROX_H_MAX=20
+EXT_APPROX_G_LOW=50
+EXT_APPROX_G_MAX_DIFF=1
+EXT_APPROX_H_LOW=100
+EXT_APPROX_H_MAX=200
 
 
 echo "--- Preparing Directories ---"
@@ -44,14 +48,14 @@ done
 echo "--- Starting Generation ---"
 
 # ==========================================
-# 1. Generate EXACT ISOMORPHISM Algorithm Cases (Sizes 10-20)
+# 1. Generate EXACT ISOMORPHISM Algorithm Cases
 # ==========================================
 echo "[1/4] Generating $NUM_CASES cases for Exact Isomorphism (Size $ISO_EXACT_H_LOW-$ISO_EXACT_H_MAX)..."
 
 for (( i=1; i<=NUM_CASES; i++ )); do
     # Generate random sizes using shuf
     h_size=$(shuf -i $ISO_EXACT_H_LOW-$ISO_EXACT_H_MAX -n 1)
-    max_g=$((h_size - 1))
+    max_g=$((h_size - $ISO_EXACT_G_MAX_DIFF))
     g_size=$(shuf -i $ISO_EXACT_G_LOW-$max_g -n 1)
 
     # Start argument array
@@ -71,13 +75,13 @@ for (( i=1; i<=NUM_CASES; i++ )); do
 done
 
 # ==========================================
-# 2. Generate APPROX ISOMORPHISM Algorithm Cases (Sizes 30-40)
+# 2. Generate APPROX ISOMORPHISM Algorithm Cases
 # ==========================================
 echo "[2/4] Generating $NUM_CASES cases for Approx Isomorphism (Size $ISO_APPROX_H_LOW-$ISO_APPROX_H_MAX)..."
 
 for (( i=1; i<=NUM_CASES; i++ )); do
     h_size=$(shuf -i $ISO_APPROX_H_LOW-$ISO_APPROX_H_MAX -n 1)
-    max_g=$((h_size - 5))
+    max_g=$((h_size - $ISO_APPROX_G_MAX_DIFF))
     g_size=$(shuf -i $ISO_APPROX_G_LOW-$max_g -n 1)
 
     cmd_args=( "$g_size" "$h_size" )
@@ -96,14 +100,14 @@ for (( i=1; i<=NUM_CASES; i++ )); do
 done
 
 # ==========================================
-# 3. Generate EXACT EXTENSION Cases (Max H=12, Non-Iso)
+# 3. Generate EXACT EXTENSION Cases
 # ==========================================
 echo "[3/4] Generating $NUM_CASES cases for Exact Extension (Max H=$EXT_EXACT_H_MAX)..."
 
 for (( i=1; i<=NUM_CASES; i++ )); do
     # Range 5 to 12
     h_size=$(shuf -i $EXT_EXACT_H_LOW-$EXT_EXACT_H_MAX -n 1)
-    max_g=$((h_size - 1))
+    max_g=$((h_size - $EXT_EXACT_G_MAX_DIFF))
     g_size=$(shuf -i $EXT_EXACT_G_LOW-$max_g -n 1)
 
     # Always Non-Isomorphic
@@ -117,14 +121,14 @@ for (( i=1; i<=NUM_CASES; i++ )); do
 done
 
 # ==========================================
-# 4. Generate HEURISTIC EXTENSION Cases (Max H=20, Non-Iso)
+# 4. Generate HEURISTIC EXTENSION Cases
 # ==========================================
 echo "[4/4] Generating $NUM_CASES cases for Heuristic Extension (Max H=$EXT_APPROX_H_MAX)..."
 
 for (( i=1; i<=NUM_CASES; i++ )); do
     # Range 10 to 20
     h_size=$(shuf -i $EXT_APPROX_H_LOW-$EXT_APPROX_H_MAX -n 1)
-    max_g=$((h_size - 1))
+    max_g=$((h_size - $EXT_APPROX_G_MAX_DIFF))
     g_size=$(shuf -i $EXT_APPROX_G_LOW-$max_g -n 1)
 
     # Always Non-Isomorphic
