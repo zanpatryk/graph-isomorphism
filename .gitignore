@@ -8,7 +8,8 @@ CMakeFiles/
 cmake_install.cmake
 
 # Build artifacts
-build/
+build/*
+!build/aac
 *.o
 *.obj
 *.a
