@@ -8,9 +8,14 @@ DIR_EXACT_EXT="tests_exact_ext"   # New directory for Exact Extension
 DIR_APPROX_EXT="tests_approx_ext" # New directory for Approx Extension
 NUM_CASES=10
 
+# Minimum number of vertices in G
 ISO_EXACT_G_LOW=13
+# Maximum number of vertices in G, based on the max number of vertices in H (MAX_G = MAX_H - MAX_G_DIFF)
+# Make sure, that the range is proper (eg. H_MAX - G_MAX_DIFF >= G_LOW)
 ISO_EXACT_G_MAX_DIFF=1
+# Minimum number of vertices in H
 ISO_EXACT_H_LOW=18
+# Maximum number of vertices in H
 ISO_EXACT_H_MAX=26
 
 ISO_APPROX_G_LOW=40
