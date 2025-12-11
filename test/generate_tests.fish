@@ -3,7 +3,7 @@
 # Configuration
 set PYTHON_SCRIPT "graph_gen.py"
 set DIR_EXACT "tests_exact"
-set DIR_HEURISTIC "tests_heuristic"
+set DIR_APPROX "tests_approx"
 set NUM_CASES 10 
 
 # Check if python script exists
@@ -16,8 +16,8 @@ end
 if not test -d $DIR_EXACT
     mkdir $DIR_EXACT
 end
-if not test -d $DIR_HEURISTIC
-    mkdir $DIR_HEURISTIC
+if not test -d $DIR_APPROX
+    mkdir $DIR_APPROX
 end
 
 echo "--- Starting Generation ---"
@@ -56,9 +56,9 @@ for i in (seq 1 $NUM_CASES)
 end
 
 # ==========================================
-# 2. Generate HEURISTIC Algorithm Cases (Sizes 30-40)
+# 2. Generate APPROX Algorithm Cases (Sizes 30-40)
 # ==========================================
-echo "[2/2] Generating $NUM_CASES cases for Heuristic Algorithms (Size 30-40)..."
+echo "[2/2] Generating $NUM_CASES cases for Approx Algorithms (Size 30-40)..."
 
 for i in (seq 1 $NUM_CASES)
     set h_size (random 30 40)
@@ -76,7 +76,7 @@ for i in (seq 1 $NUM_CASES)
         set type_lbl "isomorphic"
     end
 
-    set filename "$DIR_HEURISTIC/heur_{$i}_{$type_lbl}_G{$g_size}_H{$h_size}.txt"
+    set filename "$DIR_APPROX/heur_{$i}_{$type_lbl}_G{$g_size}_H{$h_size}.txt"
     
     # 3. Add output filename
     set -a cmd_args "--output" $filename
@@ -87,4 +87,4 @@ end
 
 echo "--- Done! ---"
 echo "Exact cases saved in: ./$DIR_EXACT"
-echo "Heuristic cases saved in: ./$DIR_HEURISTIC"
+echo "Approx cases saved in: ./$DIR_APPROX"

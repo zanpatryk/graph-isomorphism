@@ -5,7 +5,7 @@
 # ==========================================
 set EXECUTABLE "../aac"
 set DIR_EXACT "tests_exact"
-set DIR_HEURISTIC "tests_heuristic"
+set DIR_APPROX "tests_approx"
 set RESULTS_DIR "results"
 set N_VALUE 1  # Number of solutions to find
 
@@ -25,7 +25,7 @@ echo "Running All Algorithm Tests"
 echo "=========================================="
 echo "Executable:      $EXECUTABLE"
 echo "Exact Data:      $DIR_EXACT"
-echo "Heuristic Data:  $DIR_HEURISTIC"
+echo "Approx Data:     $DIR_APPROX"
 echo "Results Dir:     $RESULTS_DIR"
 echo "N Value:         $N_VALUE"
 echo "=========================================="
@@ -37,6 +37,12 @@ echo ""
 function run_algo_suite
     set algo_name $argv[1]    # e.g., "iso_exact"
     set input_dir $argv[2]    # e.g., "tests_exact"
+
+    # Skip if directory doesn't exist
+    if not test -d $input_dir
+        echo "Warning: Directory '$input_dir' not found. Skipping $algo_name."
+        return
+    end
 
     set result_file "$RESULTS_DIR/{$algo_name}_results.txt"
     set data_files $input_dir/*.txt
@@ -95,21 +101,27 @@ end
 # Main Execution
 # ==========================================
 
-# 1. Run EXACT algorithms on the Exact dataset
-if test -d $DIR_EXACT
-    run_algo_suite "iso_exact" $DIR_EXACT
-    run_algo_suite "ext_exact" $DIR_EXACT
-else
-    echo "Warning: Directory '$DIR_EXACT' not found. Skipping Exact tests."
-end
+# --- PHASE 1: FINDING ALGORITHMS (Isomorphism) ---
+echo ">>> PHASE 1: Subgraph Isomorphism (Finding) <<<"
+echo ""
 
-# 2. Run HEURISTIC algorithms on the Heuristic dataset
-if test -d $DIR_HEURISTIC
-    run_algo_suite "iso_approx" $DIR_HEURISTIC
-    run_algo_suite "ext_approx" $DIR_HEURISTIC
-else
-    echo "Warning: Directory '$DIR_HEURISTIC' not found. Skipping Heuristic tests."
-end
+# 1. Exact Isomorphism (on Exact Data)
+run_algo_suite "iso_exact" $DIR_EXACT
+
+# 2. Approx Isomorphism (on Approx Data)
+run_algo_suite "iso_approx" $DIR_APPROX
+
+
+# --- PHASE 2: EXTENSION ALGORITHMS ---
+echo ">>> PHASE 2: Minimal Extension <<<"
+echo ""
+
+# 3. Exact Extension (on Exact Data)
+run_algo_suite "ext_exact" $DIR_EXACT
+
+# 4. Approx Extension (on Approx Data)
+run_algo_suite "ext_approx" $DIR_APPROX
+
 
 # ==========================================
 # Summary
