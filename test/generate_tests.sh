@@ -1,100 +1,123 @@
 #!/bin/bash
 
 # Configuration
-C_PROG="./graph_gen"
+C_SCRIPT="./graph_gen"
 DIR_EXACT="tests_exact"
 DIR_APPROX="tests_approx"
+DIR_EXACT_EXT="tests_exact_ext"   # New directory for Exact Extension
+DIR_APPROX_EXT="tests_approx_ext" # New directory for Approx Extension
 NUM_CASES=10
 
-# ---------------------------------------------------------
-# Optional: Compile the C code if the executable is missing
-# ---------------------------------------------------------
-if [[ ! -f "$C_PROG" ]]; then
-    if [[ -f "graph_gen.c" ]]; then
-        echo "Executable '$C_PROG' not found. Compiling graph_gen.c..."
-        gcc -O3 -o graph_gen graph_gen.c
-        if [[ $? -ne 0 ]]; then
-            echo "Error: Compilation failed."
-            exit 1
-        fi
-    else
-        echo "Error: Could not find executable '$C_PROG' or source 'graph_gen.c'"
-        exit 1
-    fi
+# Check if python script exists
+if [[ ! -f "$C_SCRIPT" ]]; then
+    echo "Error: Could not find '$C_SCRIPT'"
+    exit 1
 fi
 
-# Create output directories (mkdir -p creates only if missing)
-mkdir -p "$DIR_EXACT"
-mkdir -p "$DIR_APPROX"
+# Create output directories
+[[ ! -d "$DIR_EXACT" ]] && mkdir -p "$DIR_EXACT"
+[[ ! -d "$DIR_APPROX" ]] && mkdir -p "$DIR_APPROX"
+[[ ! -d "$DIR_EXACT_EXT" ]] && mkdir -p "$DIR_EXACT_EXT"
+[[ ! -d "$DIR_APPROX_EXT" ]] && mkdir -p "$DIR_APPROX_EXT"
 
 echo "--- Starting Generation ---"
 
 # ==========================================
-# 1. Generate EXACT Algorithm Cases (Sizes 10-20)
+# 1. Generate EXACT ISOMORPHISM Algorithm Cases (Sizes 10-20)
 # ==========================================
-echo "[1/2] Generating $NUM_CASES cases for Exact Algorithms (Size 10-20)..."
+echo "[1/4] Generating $NUM_CASES cases for Exact Isomorphism (Size 10-20)..."
 
-for i in $(seq 1 $NUM_CASES); do
-    # Generate random h_size between 10 and 20 (inclusive)
-    # Bash $RANDOM is 0-32767.
-    # Logic: $(( RANDOM % (MAX - MIN + 1) + MIN ))
-    h_size=$(( (RANDOM % 11) + 10 ))
+for (( i=1; i<=NUM_CASES; i++ )); do
+    # Generate random sizes using shuf
+    h_size=$(shuf -i 10-20 -n 1)
+    max_g=$((h_size - 1))
+    g_size=$(shuf -i 4-$max_g -n 1)
 
-    max_g=$(( h_size - 1 ))
-
-    # Generate random g_size between 4 and max_g
-    range_g=$(( max_g - 4 + 1 ))
-    g_size=$(( (RANDOM % range_g) + 4 ))
+    # Start argument array
+    cmd_args=( "$g_size" "$h_size" )
 
     # Determine Type (Alternating)
     if (( i % 2 == 0 )); then
-        # Even: Non-Isomorphic
-        flag="--not-subgraph"
+        cmd_args+=( "--not-subgraph" )
         type_lbl="non_isomorphic"
     else
-        # Odd: Isomorphic
-        flag=""
         type_lbl="isomorphic"
     fi
 
     filename="$DIR_EXACT/exact_${i}_${type_lbl}_G${g_size}_H${h_size}.txt"
-
-    # Run the C executable
-    # Note: We pass $flag unquoted so it expands to nothing if empty,
-    # or passes the flag if present.
-    $C_PROG $g_size $h_size $flag --output "$filename"
+    cmd_args+=( "--output" "$filename" )
+    "$C_SCRIPT" "${cmd_args[@]}"
 done
 
 # ==========================================
-# 2. Generate APPROX Algorithm Cases (Sizes 30-40)
+# 2. Generate APPROX ISOMORPHISM Algorithm Cases (Sizes 30-40)
 # ==========================================
-echo "[2/2] Generating $NUM_CASES cases for Approx Algorithms (Size 30-40)..."
+echo "[2/4] Generating $NUM_CASES cases for Approx Isomorphism (Size 30-40)..."
 
-for i in $(seq 1 $NUM_CASES); do
-    # h_size between 30 and 40
-    h_size=$(( (RANDOM % 11) + 30 ))
+for (( i=1; i<=NUM_CASES; i++ )); do
+    h_size=$(shuf -i 30-40 -n 1)
+    max_g=$((h_size - 5))
+    g_size=$(shuf -i 10-$max_g -n 1)
 
-    max_g=$(( h_size - 5 ))
+    cmd_args=( "$g_size" "$h_size" )
 
-    # g_size between 10 and max_g
-    range_g=$(( max_g - 10 + 1 ))
-    g_size=$(( (RANDOM % range_g) + 10 ))
-
-    # Determine Type (Alternating)
     if (( i % 2 == 0 )); then
-        flag="--not-subgraph"
+        cmd_args+=( "--not-subgraph" )
         type_lbl="non_isomorphic"
     else
-        flag=""
         type_lbl="isomorphic"
     fi
 
     filename="$DIR_APPROX/heur_${i}_${type_lbl}_G${g_size}_H${h_size}.txt"
+    cmd_args+=( "--output" "$filename" )
 
-    # Run
-    $C_PROG $g_size $h_size $flag --output "$filename"
+    "$C_SCRIPT" "${cmd_args[@]}"
+done
+
+# ==========================================
+# 3. Generate EXACT EXTENSION Cases (Max H=12, Non-Iso)
+# ==========================================
+echo "[3/4] Generating $NUM_CASES cases for Exact Extension (Max H=12)..."
+
+for (( i=1; i<=NUM_CASES; i++ )); do
+    # Range 5 to 12
+    h_size=$(shuf -i 5-12 -n 1)
+    max_g=$((h_size - 1))
+    g_size=$(shuf -i 3-$max_g -n 1)
+
+    # Always Non-Isomorphic
+    cmd_args=( "$g_size" "$h_size" "--not-subgraph" )
+    type_lbl="non_isomorphic"
+
+    filename="$DIR_EXACT_EXT/ext_exact_${i}_${type_lbl}_G${g_size}_H${h_size}.txt"
+
+    cmd_args+=( "--output" "$filename" )
+    "$C_SCRIPT" "${cmd_args[@]}"
+done
+
+# ==========================================
+# 4. Generate HEURISTIC EXTENSION Cases (Max H=20, Non-Iso)
+# ==========================================
+echo "[4/4] Generating $NUM_CASES cases for Heuristic Extension (Max H=20)..."
+
+for (( i=1; i<=NUM_CASES; i++ )); do
+    # Range 10 to 20
+    h_size=$(shuf -i 10-20 -n 1)
+    max_g=$((h_size - 1))
+    g_size=$(shuf -i 5-$max_g -n 1)
+
+    # Always Non-Isomorphic
+    cmd_args=( "$g_size" "$h_size" "--not-subgraph" )
+    type_lbl="non_isomorphic"
+
+    filename="$DIR_APPROX_EXT/ext_heur_${i}_${type_lbl}_G${g_size}_H${h_size}.txt"
+
+    cmd_args+=( "--output" "$filename" )
+    "$C_SCRIPT" "${cmd_args[@]}"
 done
 
 echo "--- Done! ---"
-echo "Exact cases saved in: ./$DIR_EXACT"
-echo "Approx cases saved in: ./$DIR_APPROX"
+echo "Exact cases saved in:      ./$DIR_EXACT"
+echo "Approx cases saved in:     ./$DIR_APPROX"
+echo "Exact Ext cases saved in:  ./$DIR_EXACT_EXT"
+echo "Approx Ext cases saved in: ./$DIR_APPROX_EXT"
