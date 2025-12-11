@@ -9,7 +9,7 @@ DIR_APPROX="tests_approx"
 DIR_EXACT_EXT="tests_exact_ext"
 DIR_APPROX_EXT="tests_approx_ext"
 RESULTS_DIR="results"
-N_VALUE=1  # Number of solutions to find
+N_VALUE=${1:-1}  # Number of solutions to find
 
 # Check if binary exists
 if [ ! -f "$EXECUTABLE" ]; then
