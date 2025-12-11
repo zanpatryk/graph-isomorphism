@@ -9,19 +9,19 @@ DIR_APPROX_EXT="tests_approx_ext" # New directory for Approx Extension
 NUM_CASES=10
 
 # Minimum number of vertices in G
-ISO_EXACT_G_LOW=13
+ISO_EXACT_G_LOW=11
 # Maximum number of vertices in G, based on the max number of vertices in H (MAX_G = MAX_H - MAX_G_DIFF)
 # Make sure, that the range is proper (eg. H_MAX - G_MAX_DIFF >= G_LOW)
-ISO_EXACT_G_MAX_DIFF=1
+ISO_EXACT_G_MAX_DIFF=5
 # Minimum number of vertices in H
-ISO_EXACT_H_LOW=18
+ISO_EXACT_H_LOW=16
 # Maximum number of vertices in H
-ISO_EXACT_H_MAX=26
+ISO_EXACT_H_MAX=23
 
 ISO_APPROX_G_LOW=40
 ISO_APPROX_G_MAX_DIFF=1
-ISO_APPROX_H_LOW=90
-ISO_APPROX_H_MAX=120
+ISO_APPROX_H_LOW=80
+ISO_APPROX_H_MAX=100
 
 EXT_EXACT_G_LOW=5
 EXT_EXACT_G_MAX_DIFF=2
@@ -29,7 +29,7 @@ EXT_EXACT_H_LOW=7
 EXT_EXACT_H_MAX=11
 
 EXT_APPROX_G_LOW=50
-EXT_APPROX_G_MAX_DIFF=1
+EXT_APPROX_G_MAX_DIFF=5
 EXT_APPROX_H_LOW=80
 EXT_APPROX_H_MAX=150
 
