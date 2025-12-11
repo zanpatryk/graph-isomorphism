@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -std=c11 -O3 -I.
 # Target Executable Name
-TARGET = aac
+TARGET = aac.exe
 
 # Source Files
 SRCS = main.c \
@@ -23,7 +23,7 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 	@echo "Linking complete. Removing object files..."
-	rm -f $(OBJS)
+	-rm -f $(OBJS)
 
 # Compilation Rule
 %.o: %.c
@@ -31,6 +31,6 @@ $(TARGET): $(OBJS)
 
 # Clean Rule (Only needs to remove the executable now)
 clean:
-	rm -f $(TARGET)
+	-rm -f $(TARGET)
 
 .PHONY: all clean
