@@ -1,0 +1,13 @@
+==========================================
+Test Run Summary
+==========================================
+Date: чт 11 гру 2025 23:02:05 CET
+Status: SUCCESS (All tests passed)
+Executable: ../build/aac
+
+Generated Log Files:
+  - results/ext_approx_results.txt
+  - results/ext_exact_results.txt
+  - results/iso_approx_results.txt
+  - results/iso_exact_results.txt
+==========================================
