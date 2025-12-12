@@ -1,4 +1,5 @@
 #include "minimal_extension.h"
+#include "../console.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,7 +17,7 @@ static int g_min_deficit;
 static int g_best_mapping[MAX_VERTICES];
 static int g_n_g, g_n_h;
 static const int *g_adj_g;
-static int *g_adj_h_working;  // Working copy of H that we modify
+static int *g_adj_h_working; // Working copy of H that we modify
 
 // Already found mappings (to ensure distinctness)
 static int g_found_mappings[MAX_MAPPINGS][MAX_VERTICES];
@@ -65,6 +66,13 @@ static int calculate_deficit(const int *mapping) {
     return deficit;
 }
 
+static void print_mapping_inline(const int *mapping, int n_g) {
+    printf("  Mapping: ");
+    for (int v = 0; v < n_g; v++)
+        printf("G_%d->H_%d ", v + 1, mapping[v] + 1);
+    printf("\n");
+}
+
 // ============================================================================
 // Backtracking to Find Single Best Mapping
 // ============================================================================
@@ -102,8 +110,8 @@ static void backtrack_single(int v_idx, int *mapping, bool *used_h) {
 static bool find_best_mapping(int *out_mapping, int *out_deficit) {
     g_min_deficit = INT_MAX;
 
-    int *mapping = (int *)malloc(g_n_g * sizeof(int));
-    bool *used_h = (bool *)calloc(g_n_h, sizeof(bool));
+    int *mapping = (int *) malloc(g_n_g * sizeof(int));
+    bool *used_h = (bool *) calloc(g_n_h, sizeof(bool));
 
     backtrack_single(0, mapping, used_h);
 
@@ -111,7 +119,7 @@ static bool find_best_mapping(int *out_mapping, int *out_deficit) {
     free(used_h);
 
     if (g_min_deficit == INT_MAX) {
-        return false;  // No valid distinct mapping found
+        return false; // No valid distinct mapping found
     }
 
     memcpy(out_mapping, g_best_mapping, g_n_g * sizeof(int));
@@ -146,66 +154,80 @@ static int apply_mapping_edges(const int *mapping) {
 // ============================================================================
 
 ExtensionResult *find_minimal_extension_exact(int n_g, const int *adj_g,
-                                               int n_h, const int *adj_h,
-                                               int n) {
-    ExtensionResult *result = (ExtensionResult *)malloc(sizeof(ExtensionResult));
-    result->mappings = (int **)malloc(n * sizeof(int *));
+                                              int n_h, const int *adj_h,
+                                              int n, bool interactive) {
+    ExtensionResult *result = (ExtensionResult *) malloc(sizeof(ExtensionResult));
+    result->mappings = (int **) malloc(MAX_MAPPINGS * sizeof(int *));
     result->num_mappings = 0;
     result->n_g = n_g;
     result->n_h = n_h;
     result->total_edges_added = 0;
-    result->extended_adj_h = (int *)malloc((size_t)n_h * n_h * sizeof(int));
-    memcpy(result->extended_adj_h, adj_h, (size_t)n_h * n_h * sizeof(int));
+    result->extended_adj_h = (int *) malloc((size_t) n_h * n_h * sizeof(int));
+    memcpy(result->extended_adj_h, adj_h, (size_t) n_h * n_h * sizeof(int));
 
-    // Validation
     if (n_g > n_h) {
         fprintf(stderr, "Error: G has more vertices than H.\n");
         return result;
     }
-
     if (n_g > MAX_VERTICES || n_h > MAX_VERTICES) {
         fprintf(stderr, "Error: Graph size exceeds limit of %d vertices.\n", MAX_VERTICES);
         return result;
     }
 
-    if (n > MAX_MAPPINGS) {
-        fprintf(stderr, "Warning: Requested %d mappings, limiting to %d.\n", n, MAX_MAPPINGS);
-        n = MAX_MAPPINGS;
-    }
-
-    // Initialize global state
     g_n_g = n_g;
     g_n_h = n_h;
     g_adj_g = adj_g;
-    g_adj_h_working = result->extended_adj_h;  // We modify this in place
+    g_adj_h_working = result->extended_adj_h;
     g_num_found = 0;
 
-    // Iteratively find n mappings
-    for (int k = 0; k < n; k++) {
-        int *new_mapping = (int *)malloc(n_g * sizeof(int));
+    int *prev_adj_h = (int *) malloc((size_t) n_h * n_h * sizeof(int));
+    memcpy(prev_adj_h, adj_h, (size_t) n_h * n_h * sizeof(int));
+
+    int target = n;
+    while (1) {
+        int *new_mapping = (int *) malloc(n_g * sizeof(int));
         int deficit;
 
         if (!find_best_mapping(new_mapping, &deficit)) {
-            // No more distinct mappings possible
             free(new_mapping);
-            printf("Could only find %d distinct mappings (requested %d).\n", k, n);
+            printf("No more distinct mappings possible. Found %d total.\n", result->num_mappings);
             break;
         }
 
-        // Store this mapping
+        memcpy(prev_adj_h, g_adj_h_working, (size_t) n_h * n_h * sizeof(int));
+
         result->mappings[result->num_mappings] = new_mapping;
         memcpy(g_found_mappings[g_num_found], new_mapping, n_g * sizeof(int));
         g_num_found++;
         result->num_mappings++;
 
-        // Apply edges to H' for this mapping
         int edges_this_round = apply_mapping_edges(new_mapping);
         result->total_edges_added += edges_this_round;
 
-        printf("Mapping %d: deficit = %d, edges added this round = %d\n",
-               k + 1, deficit, edges_this_round);
+        printf("\nMapping %d: deficit = %d, edges added this round = %d\n",
+               result->num_mappings, deficit, edges_this_round);
+        print_mapping_inline(new_mapping, n_g);
+
+        if (edges_this_round > 0) {
+            printf("\nUpdated H' (new edges highlighted in green):\n");
+            print_matrix_highlighted(n_h, g_adj_h_working, prev_adj_h);
+        }
+
+        printf("\nUpdated H' (mapping edges highlighted in red):\n");
+        print_matrix_with_mapping(n_h, g_adj_h_working, prev_adj_h, n_g, adj_g, new_mapping);
+
+        if (result->num_mappings >= target) {
+            if (!interactive) break;
+            if (!prompt_continue("Continue searching for more mappings?")) break;
+        }
+
+        if (result->num_mappings >= MAX_MAPPINGS) {
+            printf("Reached maximum mappings limit (%d).\n", MAX_MAPPINGS);
+            break;
+        }
     }
 
+    free(prev_adj_h);
     return result;
 }
 

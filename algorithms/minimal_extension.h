@@ -1,5 +1,6 @@
 #ifndef AAC_MINIMAL_EXTENSION_H
 #define AAC_MINIMAL_EXTENSION_H
+#include <stdbool.h>
 
 /**
  * Result structure for minimal extension
@@ -32,7 +33,7 @@ typedef struct {
  */
 ExtensionResult *find_minimal_extension_exact(int n_g, const int *adj_g,
                                                int n_h, const int *adj_h,
-                                               int n);
+                                               int n, bool interactive);
 
 /**
  * Free memory allocated for extension result

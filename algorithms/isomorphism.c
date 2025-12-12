@@ -1,5 +1,6 @@
 #include "isomorphism.h"
 #include "product_graph.h"
+#include "../console.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,6 +55,16 @@ static void add_mapping(IsomorphismResult *result, int *mapping) {
     result->mappings[result->num_found++] = mapping;
 }
 
+static void print_single_mapping(int idx, const int *mapping, int n_g,
+                                 int n_h, const int *adj_g, const int *adj_h) {
+    printf("\nMapping %d:\n", idx);
+    for (int v = 0; v < n_g; v++) {
+        printf("    G_%d -> H_%d\n", v + 1, mapping[v] + 1);
+    }
+    printf("\nH with mapped edges highlighted:\n");
+    print_matrix_with_mapping(n_h, adj_h, NULL, n_g, adj_g, mapping);
+}
+
 // ============================================================================
 // Exact Algorithm: Bron-Kerbosch with pivoting (simplified & fixed)
 // ============================================================================
@@ -64,6 +75,11 @@ typedef struct {
     int target_size;
     int max_to_find;
     int max_pg_vertices; // For safe allocation
+    int initial_target;
+    bool interactive;
+    bool stop_requested;
+    const int *adj_g;
+    const int *adj_h;
 } BKContext;
 
 // Check if vertex v is compatible with all vertices in clique R
@@ -91,6 +107,8 @@ static bool is_compatible_with_clique(const ProductGraph *pg, int v,
 static void find_cliques_recursive(BKContext *ctx,
                                    int *R, int r_size,
                                    int *candidates, int num_candidates) {
+    if (ctx->stop_requested) return;
+
     // Check if we’ve found enough
     if (ctx->max_to_find > 0 && ctx->result->num_found >= ctx->max_to_find) {
         return;
@@ -103,6 +121,18 @@ static void find_cliques_recursive(BKContext *ctx,
         if (!mapping_exists(ctx->result, mapping)) {
             add_mapping(ctx->result, mapping);
             ctx->result->is_subgraph = true;
+
+            print_single_mapping(ctx->result->num_found, mapping, ctx->result->n_g, ctx->pg->n_h, ctx->adj_g,
+                                 ctx->adj_h);
+
+            // After reaching initial target, prompt for more
+            if (ctx->result->num_found >= ctx->initial_target) {
+                if (!ctx->interactive) {
+                    ctx->stop_requested = true;
+                } else if (!prompt_continue("Continue searching for more isomorphisms?")) {
+                    ctx->stop_requested = true;
+                }
+            }
         } else {
             free(mapping);
         }
@@ -159,7 +189,7 @@ static void find_cliques_recursive(BKContext *ctx,
 
 IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
                                            int n_h, const int *adj_h,
-                                           int n) {
+                                           int n, bool interactive) {
     IsomorphismResult *result = (IsomorphismResult *) malloc(sizeof(IsomorphismResult));
     result->mappings = (int **) malloc(MAX_ISOMORPHISMS * sizeof(int *));
     result->num_found = 0;
@@ -201,10 +231,14 @@ IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
         .pg = pg,
         .result = result,
         .target_size = n_g,
-        .max_to_find = n,
-        .max_pg_vertices = pg->num_vertices
+        .max_to_find = 0, // Changed: unlimited, we control via prompt
+        .max_pg_vertices = pg->num_vertices,
+        .initial_target = n,
+        .interactive = interactive,
+        .stop_requested = false,
+        .adj_g = adj_g,
+        .adj_h = adj_h
     };
-
     // Allocate working arrays
     int *R = (int *) malloc(pg->num_vertices * sizeof(int));
     int *candidates = (int *) malloc(pg->num_vertices * sizeof(int));
@@ -403,7 +437,7 @@ static bool verify_isomorphism(int n_g, const int *adj_g,
 
 IsomorphismResult *find_isomorphisms_greedy(int n_g, const int *adj_g,
                                             int n_h, const int *adj_h,
-                                            int n) {
+                                            int n, bool interactive) {
     IsomorphismResult *result = (IsomorphismResult *) malloc(sizeof(IsomorphismResult));
     result->mappings = (int **) malloc(MAX_ISOMORPHISMS * sizeof(int *));
     result->num_found = 0;
@@ -437,71 +471,75 @@ IsomorphismResult *find_isomorphisms_greedy(int n_g, const int *adj_g,
     // The anchor vertex: highest degree in G
     int anchor_v = sorted_g[0].id;
 
-    // Try each possible starting assignment for anchor vertex
-    // Iterate H vertices in degree order (high to low) for better matches
-    for (int h_idx = 0; h_idx < n_h && result->num_found < n; h_idx++) {
+    bool stop = false;
+
+    /// Try each possible starting assignment for anchor vertex
+    for (int h_idx = 0; h_idx < n_h && !stop; h_idx++) {
         int start_u = sorted_h[h_idx].id;
 
         int *mapping = try_greedy_from_start(n_g, adj_g, n_h, adj_h,
                                              sorted_g, anchor_v, start_u);
 
         if (mapping == NULL) continue;
-
-        // Verify it's actually valid
         if (!verify_isomorphism(n_g, adj_g, n_h, adj_h, mapping)) {
             free(mapping);
             continue;
         }
-
-        // Check distinctness
         if (mapping_exists(result, mapping)) {
             free(mapping);
             continue;
         }
 
-        // Found a valid, distinct isomorphism
         add_mapping(result, mapping);
         result->is_subgraph = true;
 
         printf("Found isomorphism %d (anchor G_%d -> H_%d)\n",
                result->num_found, anchor_v + 1, start_u + 1);
+        print_single_mapping(result->num_found, result->mappings[result->num_found - 1], n_g, n_h, adj_g, adj_h);
+
+        if (result->num_found >= n) {
+            if (!interactive) { stop = true; } else if (!prompt_continue("Continue searching for more isomorphisms?")) {
+                stop = true;
+            }
+        }
     }
 
-    // If we need more isomorphisms, try other anchor vertices
-    if (result->num_found < n && n_g > 1) {
-        for (int g_idx = 1; g_idx < n_g && result->num_found < n; g_idx++) {
-            int alt_anchor = sorted_g[g_idx].id;
+    // Try other anchor vertices
+    for (int g_idx = 1; g_idx < n_g && !stop; g_idx++) {
+        int alt_anchor = sorted_g[g_idx].id;
 
-            for (int h_idx = 0; h_idx < n_h && result->num_found < n; h_idx++) {
-                int start_u = sorted_h[h_idx].id;
+        for (int h_idx = 0; h_idx < n_h && !stop; h_idx++) {
+            int start_u = sorted_h[h_idx].id;
 
-                int *mapping = try_greedy_from_start(n_g, adj_g, n_h, adj_h,
-                                                     sorted_g, alt_anchor, start_u);
+            int *mapping = try_greedy_from_start(n_g, adj_g, n_h, adj_h,
+                                                 sorted_g, alt_anchor, start_u);
 
-                if (mapping == NULL) continue;
+            if (mapping == NULL) continue;
+            if (!verify_isomorphism(n_g, adj_g, n_h, adj_h, mapping)) {
+                free(mapping);
+                continue;
+            }
+            if (mapping_exists(result, mapping)) {
+                free(mapping);
+                continue;
+            }
 
-                if (!verify_isomorphism(n_g, adj_g, n_h, adj_h, mapping)) {
-                    free(mapping);
-                    continue;
-                }
+            add_mapping(result, mapping);
+            result->is_subgraph = true;
 
-                if (mapping_exists(result, mapping)) {
-                    free(mapping);
-                    continue;
-                }
+            printf("Found isomorphism %d (alt anchor G_%d -> H_%d)\n",
+                   result->num_found, alt_anchor + 1, start_u + 1);
+            print_single_mapping(result->num_found, result->mappings[result->num_found - 1], n_g, n_h, adj_g, adj_h);
 
-                add_mapping(result, mapping);
-                result->is_subgraph = true;
-
-                printf("Found isomorphism %d (alt anchor G_%d -> H_%d)\n",
-                       result->num_found, alt_anchor + 1, start_u + 1);
+            if (result->num_found >= n) {
+                if (!interactive) { stop = true; } else if (!prompt_continue(
+                    "Continue searching for more isomorphisms?")) { stop = true; }
             }
         }
     }
 
     free(sorted_g);
     free(sorted_h);
-
     return result;
 }
 

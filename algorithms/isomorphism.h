@@ -7,10 +7,10 @@
  * Result structure for isomorphism finding
  */
 typedef struct {
-    int **mappings;      // Array of mappings, each mapping[i][v] = u means G_v -> H_u
-    int num_found;       // Number of isomorphisms found
-    int n_g;             // Size of G (for interpreting mappings)
-    bool is_subgraph;    // True if at least one isomorphism exists (G is subgraph of H)
+    int **mappings; // Array of mappings, each mapping[i][v] = u means G_v -> H_u
+    int num_found; // Number of isomorphisms found
+    int n_g; // Size of G (for interpreting mappings)
+    bool is_subgraph; // True if at least one isomorphism exists (G is subgraph of H)
 } IsomorphismResult;
 
 /**
@@ -24,8 +24,8 @@ typedef struct {
  * @return IsomorphismResult (caller must free with free_isomorphism_result)
  */
 IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
-                                            int n_h, const int *adj_h,
-                                            int n);
+                                           int n_h, const int *adj_h,
+                                           int n, bool interactive);
 
 /**
  * Find up to n distinct subgraph isomorphisms using heuristic (greedy clique)
@@ -38,8 +38,8 @@ IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
  * @return IsomorphismResult (caller must free with free_isomorphism_result)
  */
 IsomorphismResult *find_isomorphisms_greedy(int n_g, const int *adj_g,
-                                             int n_h, const int *adj_h,
-                                             int n);
+                                            int n_h, const int *adj_h,
+                                            int n, bool interactive);
 
 /**
  * Free memory allocated for isomorphism result

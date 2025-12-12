@@ -18,7 +18,7 @@
  */
 ExtensionResult *find_minimal_extension_greedy(int n_g, const int *adj_g,
                                                 int n_h, const int *adj_h,
-                                                int n);
+                                                int n, bool interactive);
 
 /**
  * Legacy function for backwards compatibility

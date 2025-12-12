@@ -1,4 +1,5 @@
 #include "minimal_extension_approximation.h"
+#include "../console.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +13,7 @@
 
 typedef struct {
     int id;
-    int total_degree;  // in_degree + out_degree
+    int total_degree; // in_degree + out_degree
 } VertexInfo;
 
 // ============================================================================
@@ -33,8 +34,8 @@ static int min(int a, int b) {
 
 // Comparator: descending by degree, then ascending by id
 static int compare_vertices(const void *a, const void *b) {
-    const VertexInfo *va = (const VertexInfo *)a;
-    const VertexInfo *vb = (const VertexInfo *)b;
+    const VertexInfo *va = (const VertexInfo *) a;
+    const VertexInfo *vb = (const VertexInfo *) b;
     if (vb->total_degree != va->total_degree) {
         return vb->total_degree - va->total_degree;
     }
@@ -70,21 +71,28 @@ static bool mapping_exists(int **existing, int num_existing, const int *mapping,
     return false;
 }
 
+static void print_mapping_inline(const int *mapping, int n_g) {
+    printf("  Mapping: ");
+    for (int v = 0; v < n_g; v++)
+        printf("G_%d->H_%d ", v + 1, mapping[v] + 1);
+    printf("\n");
+}
+
 // ============================================================================
 // Greedy Single Mapping Finder
 // ============================================================================
 
 // Run greedy from a fixed first assignment (first_v -> first_u)
 static int *greedy_from_start(int n_g, const int *adj_g,
-                               int n_h, const int *adj_h_current,
-                               const VertexInfo *sorted_g,
-                               const VertexInfo *h_info,
-                               int first_v, int first_u,
-                               int *out_deficit) {
-    int *mapping = (int *)malloc(n_g * sizeof(int));
+                              int n_h, const int *adj_h_current,
+                              const VertexInfo *sorted_g,
+                              const VertexInfo *h_info,
+                              int first_v, int first_u,
+                              int *out_deficit) {
+    int *mapping = (int *) malloc(n_g * sizeof(int));
     for (int i = 0; i < n_g; i++) mapping[i] = -1;
 
-    bool *used_h = (bool *)calloc(n_h, sizeof(bool));
+    bool *used_h = (bool *) calloc(n_h, sizeof(bool));
 
     // Fix the first assignment
     mapping[first_v] = first_u;
@@ -94,7 +102,7 @@ static int *greedy_from_start(int n_g, const int *adj_g,
     for (int i = 0; i < n_g; i++) {
         int v = sorted_g[i].id;
 
-        if (mapping[v] != -1) continue;  // Already assigned (first vertex)
+        if (mapping[v] != -1) continue; // Already assigned (first vertex)
 
         int best_u = -1;
         int best_score = -1;
@@ -164,16 +172,16 @@ static int *greedy_from_start(int n_g, const int *adj_g,
 
 // Find best greedy mapping by trying all possible first-vertex assignments
 static int *find_greedy_mapping(int n_g, const int *adj_g,
-                                 int n_h, const int *adj_h_current,
-                                 int **existing_mappings, int num_existing,
-                                 int *out_deficit) {
+                                int n_h, const int *adj_h_current,
+                                int **existing_mappings, int num_existing,
+                                int *out_deficit) {
     // Sort G vertices by degree (descending)
-    VertexInfo *sorted_g = (VertexInfo *)malloc(n_g * sizeof(VertexInfo));
+    VertexInfo *sorted_g = (VertexInfo *) malloc(n_g * sizeof(VertexInfo));
     calc_degrees(n_g, adj_g, sorted_g);
     qsort(sorted_g, n_g, sizeof(VertexInfo), compare_vertices);
 
     // Pre-calculate H vertex degrees
-    VertexInfo *h_info = (VertexInfo *)malloc(n_h * sizeof(VertexInfo));
+    VertexInfo *h_info = (VertexInfo *) malloc(n_h * sizeof(VertexInfo));
     calc_degrees(n_h, adj_h_current, h_info);
 
     int *best_mapping = NULL;
@@ -186,7 +194,7 @@ static int *find_greedy_mapping(int n_g, const int *adj_g,
     for (int u = 0; u < n_h; u++) {
         int deficit;
         int *mapping = greedy_from_start(n_g, adj_g, n_h, adj_h_current,
-                                          sorted_g, h_info, anchor_v, u, &deficit);
+                                         sorted_g, h_info, anchor_v, u, &deficit);
 
         if (mapping == NULL) continue;
 
@@ -240,49 +248,67 @@ static int apply_edges(int n_g, const int *adj_g, int n_h, int *adj_h, const int
 // ============================================================================
 
 ExtensionResult *find_minimal_extension_greedy(int n_g, const int *adj_g,
-                                                int n_h, const int *adj_h,
-                                                int n) {
-    ExtensionResult *result = (ExtensionResult *)malloc(sizeof(ExtensionResult));
-    result->mappings = (int **)malloc(n * sizeof(int *));
+                                               int n_h, const int *adj_h,
+                                               int n, bool interactive) {
+    ExtensionResult *result = (ExtensionResult *) malloc(sizeof(ExtensionResult));
+    result->mappings = (int **) malloc(MAX_MAPPINGS * sizeof(int *));
     result->num_mappings = 0;
     result->n_g = n_g;
     result->n_h = n_h;
     result->total_edges_added = 0;
-    result->extended_adj_h = (int *)malloc((size_t)n_h * n_h * sizeof(int));
-    memcpy(result->extended_adj_h, adj_h, (size_t)n_h * n_h * sizeof(int));
+    result->extended_adj_h = (int *) malloc((size_t) n_h * n_h * sizeof(int));
+    memcpy(result->extended_adj_h, adj_h, (size_t) n_h * n_h * sizeof(int));
 
-    // Validation
     if (n_g > n_h) {
         fprintf(stderr, "Error: G has more vertices than H.\n");
         return result;
     }
 
-    if (n > MAX_MAPPINGS) {
-        fprintf(stderr, "Warning: Limiting to %d mappings.\n", MAX_MAPPINGS);
-        n = MAX_MAPPINGS;
-    }
+    int *prev_adj_h = (int *) malloc((size_t) n_h * n_h * sizeof(int));
+    memcpy(prev_adj_h, adj_h, (size_t) n_h * n_h * sizeof(int));
 
-    // Iteratively find n mappings
-    for (int k = 0; k < n; k++) {
+    int target = n;
+    while (1) {
         int deficit;
         int *new_mapping = find_greedy_mapping(n_g, adj_g, n_h, result->extended_adj_h,
-                                                result->mappings, result->num_mappings,
-                                                &deficit);
+                                               result->mappings, result->num_mappings,
+                                               &deficit);
 
         if (new_mapping == NULL) {
-            printf("Could only find %d distinct mappings (requested %d).\n", k, n);
+            printf("No more distinct mappings possible. Found %d total.\n", result->num_mappings);
             break;
         }
 
-        // Store mapping
+        memcpy(prev_adj_h, result->extended_adj_h, (size_t) n_h * n_h * sizeof(int));
+
         result->mappings[result->num_mappings++] = new_mapping;
 
-        // Apply edges
         int edges_this_round = apply_edges(n_g, adj_g, n_h, result->extended_adj_h, new_mapping);
         result->total_edges_added += edges_this_round;
 
-        printf("Mapping %d: deficit = %d, edges added = %d\n", k + 1, deficit, edges_this_round);
+        printf("\nMapping %d: deficit = %d, edges added = %d\n",
+               result->num_mappings, deficit, edges_this_round);
+        print_mapping_inline(new_mapping, n_g);
+
+        if (edges_this_round > 0) {
+            printf("\nUpdated H' (new edges highlighted in green):\n");
+            print_matrix_highlighted(n_h, result->extended_adj_h, prev_adj_h);
+        }
+
+        printf("\nUpdated H' (mapping edges highlighted in red):\n");
+        print_matrix_with_mapping(n_h, result->extended_adj_h, prev_adj_h, n_g, adj_g, new_mapping);
+
+        if (result->num_mappings >= target) {
+            if (!interactive) break;
+            if (!prompt_continue("Continue searching for more mappings?")) break;
+        }
+
+        if (result->num_mappings >= MAX_MAPPINGS) {
+            printf("Reached maximum mappings limit (%d).\n", MAX_MAPPINGS);
+            break;
+        }
     }
 
+    free(prev_adj_h);
     return result;
 }
