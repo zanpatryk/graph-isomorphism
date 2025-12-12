@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_ISOMORPHISMS 1000
+#define MAX_ISOMORPHISMS 1000  // Safety limit
 
 // ============================================================================
 // Helper Functions
@@ -19,10 +19,11 @@ bool mappings_equal(const int *map1, const int *map2, int n_g) {
 
 // Extract mapping from clique (array of product graph vertex indices)
 static int *extract_mapping(const ProductGraph *pg, const int *clique, int clique_size) {
-    int *mapping = (int *)malloc(pg->n_g * sizeof(int));
+    int *mapping = (int *) malloc(pg->n_g * sizeof(int));
     for (int i = 0; i < pg->n_g; i++) {
-        mapping[i] = -1;  // Initialize as unmapped
+        mapping[i] = -1; // Initialize as unmapped
     }
+
 
     for (int i = 0; i < clique_size; i++) {
         int pg_idx = clique[i];
@@ -62,14 +63,15 @@ typedef struct {
     IsomorphismResult *result;
     int target_size;
     int max_to_find;
-    int max_pg_vertices;  // For safe allocation
+    int max_pg_vertices; // For safe allocation
 } BKContext;
 
 // Check if vertex v is compatible with all vertices in clique R
 static bool is_compatible_with_clique(const ProductGraph *pg, int v,
-                                       const int *R, int r_size) {
+                                      const int *R, int r_size) {
     int v_g = pg->vertices[v].v;
     int v_h = pg->vertices[v].u;
+
 
     for (int i = 0; i < r_size; i++) {
         int r = R[i];
@@ -87,12 +89,13 @@ static bool is_compatible_with_clique(const ProductGraph *pg, int v,
 
 // Simple recursive backtracking to find cliques of target size
 static void find_cliques_recursive(BKContext *ctx,
-                                    int *R, int r_size,
-                                    int *candidates, int num_candidates) {
-    // Check if we've found enough
+                                   int *R, int r_size,
+                                   int *candidates, int num_candidates) {
+    // Check if we’ve found enough
     if (ctx->max_to_find > 0 && ctx->result->num_found >= ctx->max_to_find) {
         return;
     }
+
 
     // Found a clique of target size
     if (r_size == ctx->target_size) {
@@ -129,7 +132,7 @@ static void find_cliques_recursive(BKContext *ctx,
         R[r_size] = v;
 
         // Build new candidate set: vertices after i that are adjacent to v
-        int *new_candidates = (int *)malloc(num_candidates * sizeof(int));
+        int *new_candidates = (int *) malloc(num_candidates * sizeof(int));
         int new_num = 0;
 
         for (int j = i + 1; j < num_candidates; j++) {
@@ -155,13 +158,14 @@ static void find_cliques_recursive(BKContext *ctx,
 }
 
 IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
-                                            int n_h, const int *adj_h,
-                                            int n) {
-    IsomorphismResult *result = (IsomorphismResult *)malloc(sizeof(IsomorphismResult));
-    result->mappings = (int **)malloc(MAX_ISOMORPHISMS * sizeof(int *));
+                                           int n_h, const int *adj_h,
+                                           int n) {
+    IsomorphismResult *result = (IsomorphismResult *) malloc(sizeof(IsomorphismResult));
+    result->mappings = (int **) malloc(MAX_ISOMORPHISMS * sizeof(int *));
     result->num_found = 0;
     result->n_g = n_g;
     result->is_subgraph = false;
+
 
     // Edge case
     if (n_g > n_h) {
@@ -172,7 +176,7 @@ IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
     if (n_g == 0) {
         // Empty G is subgraph of any H
         result->is_subgraph = true;
-        int *empty_mapping = (int *)calloc(1, sizeof(int));
+        int *empty_mapping = (int *) calloc(1, sizeof(int));
         add_mapping(result, empty_mapping);
         return result;
     }
@@ -202,8 +206,8 @@ IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
     };
 
     // Allocate working arrays
-    int *R = (int *)malloc(pg->num_vertices * sizeof(int));
-    int *candidates = (int *)malloc(pg->num_vertices * sizeof(int));
+    int *R = (int *) malloc(pg->num_vertices * sizeof(int));
+    int *candidates = (int *) malloc(pg->num_vertices * sizeof(int));
 
     // Initial candidates: all vertices in product graph
     for (int i = 0; i < pg->num_vertices; i++) {
@@ -221,87 +225,193 @@ IsomorphismResult *find_isomorphisms_exact(int n_g, const int *adj_g,
 }
 
 // ============================================================================
-// Heuristic Algorithm: Greedy Clique
+// Heuristic Algorithm: Direct Vertex-by-Vertex Greedy Matching
 // ============================================================================
 
-// Comparator for sorting by degree (descending)
-typedef struct {
-    int idx;
-    int degree;
-} VertexDegree;
+// This approach is more reliable than greedy clique on product graph.
+// It directly builds a mapping by greedily assigning vertices.
 
-static int compare_degree_desc(const void *a, const void *b) {
-    const VertexDegree *va = (const VertexDegree *)a;
-    const VertexDegree *vb = (const VertexDegree *)b;
-    if (vb->degree != va->degree) {
-        return vb->degree - va->degree;
+typedef struct {
+    int id;
+    int total_degree;
+} GreedyVertexInfo;
+
+static int compare_by_degree_desc(const void *a, const void *b) {
+    const GreedyVertexInfo *va = (const GreedyVertexInfo *) a;
+    const GreedyVertexInfo *vb = (const GreedyVertexInfo *) b;
+    if (vb->total_degree != va->total_degree) {
+        return vb->total_degree - va->total_degree;
     }
-    return va->idx - vb->idx;  // Tie-break by index
+    return va->id - vb->id;
 }
 
-// Find a greedy clique, optionally excluding certain vertices
-static int *greedy_clique(const ProductGraph *pg, int target_size,
-                          const bool *excluded, int *out_size) {
-    int *clique = (int *)malloc(target_size * sizeof(int));
-    int clique_size = 0;
+static inline int get_adj_val(const int *adj, int n, int i, int j) {
+    return adj[i * n + j];
+}
 
-    // Sort vertices by degree
-    VertexDegree *sorted = (VertexDegree *)malloc(pg->num_vertices * sizeof(VertexDegree));
-    for (int i = 0; i < pg->num_vertices; i++) {
-        sorted[i].idx = i;
-        sorted[i].degree = pg->degree[i];
+// Calculate total degree (in + out) for each vertex
+static void calc_total_degrees(int n, const int *adj, GreedyVertexInfo *infos) {
+    for (int i = 0; i < n; i++) {
+        infos[i].id = i;
+        infos[i].total_degree = 0;
+        for (int j = 0; j < n; j++) {
+            infos[i].total_degree += get_adj_val(adj, n, i, j); // out
+            infos[i].total_degree += get_adj_val(adj, n, j, i); // in
+        }
     }
-    qsort(sorted, pg->num_vertices, sizeof(VertexDegree), compare_degree_desc);
+}
 
-    // Track which G and H vertices are used (for injectivity)
-    bool *used_g = (bool *)calloc(pg->n_g, sizeof(bool));
-    bool *used_h = (bool *)calloc(pg->n_h, sizeof(bool));
+// Check if mapping v -> u is valid given current partial mapping
+// Returns true if all edges between v and already-mapped vertices are preserved
+static bool is_valid_assignment(int v, int u,
+                                int n_g, const int *adj_g,
+                                int n_h, const int *adj_h,
+                                const int *mapping) {
+    // Check degree constraints
+    int out_deg_g = 0, in_deg_g = 0;
+    int out_deg_h = 0, in_deg_h = 0;
 
-    for (int i = 0; i < pg->num_vertices && clique_size < target_size; i++) {
-        int v = sorted[i].idx;
 
-        // Skip if excluded
-        if (excluded && excluded[v]) continue;
+    for (int j = 0; j < n_g; j++) {
+        out_deg_g += get_adj_val(adj_g, n_g, v, j);
+        in_deg_g += get_adj_val(adj_g, n_g, j, v);
+    }
+    for (int j = 0; j < n_h; j++) {
+        out_deg_h += get_adj_val(adj_h, n_h, u, j);
+        in_deg_h += get_adj_val(adj_h, n_h, j, u);
+    }
 
-        int v_g = pg->vertices[v].v;
-        int v_h = pg->vertices[v].u;
+    if (out_deg_g > out_deg_h || in_deg_g > in_deg_h) {
+        return false;
+    }
 
-        // Check injectivity
-        if (used_g[v_g] || used_h[v_h]) continue;
+    // Check edge preservation with already-mapped vertices
+    for (int v2 = 0; v2 < n_g; v2++) {
+        if (mapping[v2] == -1) continue; // Not yet mapped
 
-        // Check adjacency with all current clique members
-        bool compatible = true;
-        for (int j = 0; j < clique_size && compatible; j++) {
-            if (!product_graph_adjacent(pg, v, clique[j])) {
-                compatible = false;
+        int u2 = mapping[v2];
+
+        // Edge v -> v2 must be preserved as u -> u2
+        int g_mult = get_adj_val(adj_g, n_g, v, v2);
+        int h_mult = get_adj_val(adj_h, n_h, u, u2);
+        if (g_mult > h_mult) return false;
+
+        // Edge v2 -> v must be preserved as u2 -> u
+        g_mult = get_adj_val(adj_g, n_g, v2, v);
+        h_mult = get_adj_val(adj_h, n_h, u2, u);
+        if (g_mult > h_mult) return false;
+    }
+
+    // Check self-loop
+    int g_loop = get_adj_val(adj_g, n_g, v, v);
+    int h_loop = get_adj_val(adj_h, n_h, u, u);
+    if (g_loop > h_loop) return false;
+
+    return true;
+}
+
+// Score an assignment (higher = more edges preserved = better)
+static int score_assignment(int v, int u,
+                            int n_g, const int *adj_g,
+                            int n_h, const int *adj_h,
+                            const int *mapping) {
+    int score = 0;
+
+
+    for (int v2 = 0; v2 < n_g; v2++) {
+        if (mapping[v2] == -1) continue;
+
+        int u2 = mapping[v2];
+
+        // Edges preserved
+        score += get_adj_val(adj_g, n_g, v, v2);
+        score += get_adj_val(adj_g, n_g, v2, v);
+    }
+
+    // Self-loop
+    score += get_adj_val(adj_g, n_g, v, v);
+
+    return score;
+}
+
+// Try to build a valid isomorphism starting with first_v -> first_u
+static int *try_greedy_from_start(int n_g, const int *adj_g,
+                                  int n_h, const int *adj_h,
+                                  const GreedyVertexInfo *sorted_g,
+                                  int first_v, int first_u) {
+    int *mapping = (int *) malloc(n_g * sizeof(int));
+    for (int i = 0; i < n_g; i++) mapping[i] = -1;
+
+
+    bool *used_h = (bool *) calloc(n_h, sizeof(bool));
+
+    // Fix first assignment
+    mapping[first_v] = first_u;
+    used_h[first_u] = true;
+
+    // Greedily assign remaining vertices
+    for (int i = 0; i < n_g; i++) {
+        int v = sorted_g[i].id;
+        if (mapping[v] != -1) continue; // Already assigned
+
+        int best_u = -1;
+        int best_score = -1;
+
+        for (int u = 0; u < n_h; u++) {
+            if (used_h[u]) continue;
+
+            if (!is_valid_assignment(v, u, n_g, adj_g, n_h, adj_h, mapping)) {
+                continue;
+            }
+
+            int score = score_assignment(v, u, n_g, adj_g, n_h, adj_h, mapping);
+
+            if (score > best_score) {
+                best_score = score;
+                best_u = u;
             }
         }
 
-        if (compatible) {
-            clique[clique_size++] = v;
-            used_g[v_g] = true;
-            used_h[v_h] = true;
+        if (best_u == -1) {
+            // No valid assignment - this starting point failed
+            free(mapping);
+            free(used_h);
+            return NULL;
         }
+
+        mapping[v] = best_u;
+        used_h[best_u] = true;
     }
 
-    free(sorted);
-    free(used_g);
     free(used_h);
+    return mapping;
+}
 
-    *out_size = clique_size;
-    return clique;
+// Verify that a mapping is a valid subgraph isomorphism
+static bool verify_isomorphism(int n_g, const int *adj_g,
+                               int n_h, const int *adj_h,
+                               const int *mapping) {
+    for (int i = 0; i < n_g; i++) {
+        for (int j = 0; j < n_g; j++) {
+            int g_mult = get_adj_val(adj_g, n_g, i, j);
+            int h_mult = get_adj_val(adj_h, n_h, mapping[i], mapping[j]);
+            if (g_mult > h_mult) return false;
+        }
+    }
+    return true;
 }
 
 IsomorphismResult *find_isomorphisms_greedy(int n_g, const int *adj_g,
-                                             int n_h, const int *adj_h,
-                                             int n) {
-    IsomorphismResult *result = (IsomorphismResult *)malloc(sizeof(IsomorphismResult));
-    result->mappings = (int **)malloc(MAX_ISOMORPHISMS * sizeof(int *));
+                                            int n_h, const int *adj_h,
+                                            int n) {
+    IsomorphismResult *result = (IsomorphismResult *) malloc(sizeof(IsomorphismResult));
+    result->mappings = (int **) malloc(MAX_ISOMORPHISMS * sizeof(int *));
     result->num_found = 0;
     result->n_g = n_g;
     result->is_subgraph = false;
 
-    // Edge case
+
+    // Edge cases
     if (n_g > n_h) {
         printf("G has more vertices than H. No isomorphism possible.\n");
         return result;
@@ -309,91 +419,88 @@ IsomorphismResult *find_isomorphisms_greedy(int n_g, const int *adj_g,
 
     if (n_g == 0) {
         result->is_subgraph = true;
-        int *empty_mapping = (int *)calloc(1, sizeof(int));
+        int *empty_mapping = (int *) calloc(1, sizeof(int));
         add_mapping(result, empty_mapping);
         return result;
     }
 
-    // Build product graph
-    ProductGraph *pg = build_product_graph(n_g, adj_g, n_h, adj_h);
-    if (!pg) {
-        printf("Failed to build product graph.\n");
-        return result;
-    }
+    // Sort G vertices by degree (descending) - high degree = more constrained
+    GreedyVertexInfo *sorted_g = (GreedyVertexInfo *) malloc(n_g * sizeof(GreedyVertexInfo));
+    calc_total_degrees(n_g, adj_g, sorted_g);
+    qsort(sorted_g, n_g, sizeof(GreedyVertexInfo), compare_by_degree_desc);
 
-    if (pg->num_vertices == 0) {
-        printf("Product graph is empty. No isomorphism possible.\n");
-        free_product_graph(pg);
-        return result;
-    }
+    // Also sort H vertices by degree for smarter iteration
+    GreedyVertexInfo *sorted_h = (GreedyVertexInfo *) malloc(n_h * sizeof(GreedyVertexInfo));
+    calc_total_degrees(n_h, adj_h, sorted_h);
+    qsort(sorted_h, n_h, sizeof(GreedyVertexInfo), compare_by_degree_desc);
 
-    printf("Product graph has %d vertices\n", pg->num_vertices);
+    // The anchor vertex: highest degree in G
+    int anchor_v = sorted_g[0].id;
 
-    bool *excluded = (bool *)calloc(pg->num_vertices, sizeof(bool));
+    // Try each possible starting assignment for anchor vertex
+    // Iterate H vertices in degree order (high to low) for better matches
+    for (int h_idx = 0; h_idx < n_h && result->num_found < n; h_idx++) {
+        int start_u = sorted_h[h_idx].id;
 
-    for (int k = 0; k < n && k < MAX_ISOMORPHISMS; k++) {
-        int clique_size;
-        int *clique = greedy_clique(pg, n_g, excluded, &clique_size);
+        int *mapping = try_greedy_from_start(n_g, adj_g, n_h, adj_h,
+                                             sorted_g, anchor_v, start_u);
 
-        if (clique_size < n_g) {
-            // Couldn't find a complete clique
-            free(clique);
+        if (mapping == NULL) continue;
 
-            // Try excluding different vertices
-            bool found_alternative = false;
-            if (k > 0 && result->num_found > 0) {
-                // Reset exclusions and try different strategy
-                memset(excluded, 0, pg->num_vertices * sizeof(bool));
-
-                // Exclude all vertices from previous mappings
-                for (int m = 0; m < result->num_found; m++) {
-                    int *prev_map = result->mappings[m];
-                    for (int i = 0; i < pg->num_vertices; i++) {
-                        int v_g = pg->vertices[i].v;
-                        int v_h = pg->vertices[i].u;
-                        if (prev_map[v_g] == v_h) {
-                            excluded[i] = true;
-                        }
-                    }
-                }
-
-                clique = greedy_clique(pg, n_g, excluded, &clique_size);
-                if (clique_size == n_g) {
-                    found_alternative = true;
-                } else {
-                    free(clique);
-                }
-            }
-
-            if (!found_alternative) {
-                break;
-            }
-        }
-
-        int *mapping = extract_mapping(pg, clique, clique_size);
-
-        // Check if this mapping is distinct
-        if (!mapping_exists(result, mapping)) {
-            add_mapping(result, mapping);
-            result->is_subgraph = true;
-
-            // Mark vertices from this clique for potential exclusion
-            for (int i = 0; i < clique_size; i++) {
-                excluded[clique[i]] = true;
-            }
-        } else {
+        // Verify it's actually valid
+        if (!verify_isomorphism(n_g, adj_g, n_h, adj_h, mapping)) {
             free(mapping);
-            // Exclude more vertices to find different mapping
-            for (int i = 0; i < clique_size; i++) {
-                excluded[clique[i]] = true;
-            }
+            continue;
         }
 
-        free(clique);
+        // Check distinctness
+        if (mapping_exists(result, mapping)) {
+            free(mapping);
+            continue;
+        }
+
+        // Found a valid, distinct isomorphism
+        add_mapping(result, mapping);
+        result->is_subgraph = true;
+
+        printf("Found isomorphism %d (anchor G_%d -> H_%d)\n",
+               result->num_found, anchor_v + 1, start_u + 1);
     }
 
-    free(excluded);
-    free_product_graph(pg);
+    // If we need more isomorphisms, try other anchor vertices
+    if (result->num_found < n && n_g > 1) {
+        for (int g_idx = 1; g_idx < n_g && result->num_found < n; g_idx++) {
+            int alt_anchor = sorted_g[g_idx].id;
+
+            for (int h_idx = 0; h_idx < n_h && result->num_found < n; h_idx++) {
+                int start_u = sorted_h[h_idx].id;
+
+                int *mapping = try_greedy_from_start(n_g, adj_g, n_h, adj_h,
+                                                     sorted_g, alt_anchor, start_u);
+
+                if (mapping == NULL) continue;
+
+                if (!verify_isomorphism(n_g, adj_g, n_h, adj_h, mapping)) {
+                    free(mapping);
+                    continue;
+                }
+
+                if (mapping_exists(result, mapping)) {
+                    free(mapping);
+                    continue;
+                }
+
+                add_mapping(result, mapping);
+                result->is_subgraph = true;
+
+                printf("Found isomorphism %d (alt anchor G_%d -> H_%d)\n",
+                       result->num_found, alt_anchor + 1, start_u + 1);
+            }
+        }
+    }
+
+    free(sorted_g);
+    free(sorted_h);
 
     return result;
 }
@@ -416,6 +523,7 @@ void print_isomorphism_result(const IsomorphismResult *result) {
     printf("\n--- Isomorphism Result ---\n");
     printf("Subgraph isomorphism exists: %s\n", result->is_subgraph ? "YES" : "NO");
     printf("Number of isomorphisms found: %d\n", result->num_found);
+
 
     for (int i = 0; i < result->num_found; i++) {
         printf("\nMapping %d:\n", i + 1);

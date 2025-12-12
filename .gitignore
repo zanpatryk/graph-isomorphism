@@ -24,5 +24,6 @@ build/*
 
 test/tests_*/
 test/results/
+test/debug_data
 aac
 /results/
